@@ -26,7 +26,6 @@ exports.depression = {
 		"I felt depressed",
 		"My sleep was restless",
 		"I felt sad",
-		"My sleep was restless",
 		"I could not get going",
 		"Nothing made me happy",
 		"I felt like a bad person",
