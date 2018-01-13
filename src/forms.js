@@ -14,11 +14,12 @@ function depression(){
 			" 2 indicates 3 to 4 days. 3 indicates 5 to 7 days. And 4 indicates nearly" +
 			" everyday for 2 weeks. Lets resume. ",
 		goal: "lower",
-		MajorDepressiveEpisode: " Based on the scores you have provided; your possible depressive symptom category is Major Depressive Episode.”,
-		ProbableMajorDepressiveEpisode: " Based on the scores you have provided; your possible depressive symptom category is Probable Major Depressive Episode.”,
-		PossibleMajorDepressiveEpisode: " Based on the scores you have provided; your possible depressive symptom category is Possible major depressive episode.”,
-		SubthreshholdDepressionSymptoms: " Based on the scores you have provided; your possible depressive symptom category is Subthreshhold depression symptoms.”,
-		NoClinicalSignificance: " Based on the scores you have provided; your possible depressive symptom category shows no clinical significance.”,
+		majorDep: "Based on the scores you have provided; your possible depressive symptom category is Major Depressive Episode.",
+		
+		ProbableMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Probable Major Depressive Episode.",
+		PossibleMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Possible major depressive episode.",
+		SubthreshholdDepressionSymptoms: "Based on the scores you have provided; your possible depressive symptom category is Subthreshhold depression symptoms.",
+		NoClinicalSignificance: "Based on the scores you have provided; your possible depressive symptom category shows no clinical significance.",
 		questions: [ 
 			"My appetite was poor",
 			"I could not shake off the blues",
