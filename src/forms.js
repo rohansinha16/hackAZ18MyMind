@@ -87,14 +87,51 @@ exports.diagnosisDep = function(questions){
 exports.anxiety = {
 	min: 0,
 	max: 21,
-	intro: "",
-	outro: "",
-	help: "",
-	goal: "",
+	intro: "In this Generalized Anxiety Scale, I will be asking you 7 questions on how often" +
+		" you have been bothered by the following problems over the past two weeks or so. Please" +
+		" respond to these questions with a 0, 1, 2, or 3; 0 meaning not at all sure and 3 being" +
+		" nearly every day. Lets begin",
+	outro: "Your entry has been logged. This scale was built using the Generalized Anxiety Disorder" +
+		" 7-item (GAD-7) scale. Please visit http://www.phqscreeners.com",
+	help: "To answer these questions, please say a number between 0 and 3. 0 indicates not at all sure." +
+		" 1 indicates several days. 2 indicates over half the days. 3 indicates nearly every day." +
+		" Lets resume.",
+	goal: "lower",
+	MildAnxiety: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
+		" category is Mild Anxiety",
+	ModAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
+		" GAD; your possible Generalized Anxiety Disorder category is Moderate Anxiety. confirm" +
+		" by future evaluation.",
+	SeverAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
+		" GAD; your possible Generalized Anxiety Disorder category is Sever Anxiety. confirm by" +
+		" future evaluation",
+	NoSig: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
+		" category shows no clinical significance",
 	questions: [
-		"question 1",
-		"question 2",
+		" Feeling nervous, anxious, or on edge",
+		" Not being able to stop or control worrying",
+		" Worrying too much about different things ",
+		" Trouble relaxing ",
+		" Being so restless that it's hard to sit still",
+		" Becoming easily annoyed or irritable",
+		"  Feeling afraid as if something awful might happen ",
+		" ",
+		" ",
+	],
+	mquestions: [
+		"If you responded with any problems, how difficult have these made it for you to" +
+		" do your work, takecare of things at home, or get along with other people?" +
+		" Respond with no or between 0 and 3. 0 being not at all difficult. 1 being somewhat difficult. 2 being very" +
+		" difficult. 3 being extremely difficult. And No, for does not apply.",
 	]
+	if(total < 5){
+			return "NoSig";
+	if(total > 4, <10){
+			return "MildAnxiety";
+	if(total > 9, <15){
+			return "ModAnxiety";
+	if(total >14){
+			return "SeverAnxiety";
 };
 
 exports.diagnosisAnx = function(questions){
