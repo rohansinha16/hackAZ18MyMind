@@ -91,7 +91,7 @@ exports.anxiety = {
 	outro: "Your entry has been logged. This scale was built using the Generalized Anxiety Disorder" +
 		" 7-item (GAD-7) scale. Please visit http://www.phqscreeners.com",
 	help: "To answer these questions, please say a number between 0 and 3. 0 indicates not at all sure." +
-		" 1 indicates several days. 2 indicates over half the days. 3 indicates nearly every day." +
+		" 1 indicates several days. 2 indicates over half the days. And 3 indicates nearly every day." +
 		" Lets resume.",
 	checker: "diagnosisAnx",
 	MildAnxiety: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
@@ -163,11 +163,11 @@ exports.stress = {
 		" In the last month, how often have you been upset because of something that happened unexpectedly?",
 		" In the last month, how often have you felt that you were unable to control the important things in your life?",
 		" In the last month, how often have you felt nervous and “stressed”?",
-		" In the last month, how often have you felt confident about your ability to handle your personal problems? ",
-		" In the last month, how often have you felt that things were going your way?",
+		" In the last month, how often have you felt doubtful about your ability to handle your personal problems? ",
+		" In the last month, how often have you felt that things were not going your way?",
 		" In the last month, how often have you found that you could not cope with all the things that you had to do?",
-		" In the last month, how often have you been able to control irritations in your life?",
-		" In the last month, how often have you felt that you were on top of things?", 
+		" In the last month, how often have you been unable to control irritations in your life?",
+		" In the last month, how often have you felt that you that you could not stay on top of things?", 
 		" In the last month, how often have you been angered because of things that were outside of your control?",
 		" In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?",
 	]
@@ -192,17 +192,52 @@ exports.diagnosisStr = function(questions){
 
 exports.General = {
 	min: 0,
-	max: 0,
-	intro: "",
-	outro: "",
-	help: "",
-	goal: "",
+	max: 50,
+	intro: "In this Kessler Psychological Distress Scale, I will be asking you 10 questions" +
+		" on the ways you may have felt or behaved over the past month or so. Please" +
+		" respond to these questions with a 1, 2, 3, 4, or 5; 1 meaning none of the time" +
+		" and 5 being all of the time. Lets begin.",
+	outro: "Your entry has been logged. This scale was built using the Kessler Psychological" +
+		" Distress Scale (K10) from Kessler R. Professor of Health Care Policy, Harvard" +
+		" Medical School, Boston, USA. Please visit http://www.statisticssolutions.com/kessler-psychological-distress-scale-k10 for further information",
+	help: "To answer these questions, please say a number between 1 and 5. 1 indicates none of" +
+		" the time. 2 indicates a little of the time. 3 indicates some of the time. 4" +
+		" indicates most of the time. And 5 indicates all of the time. Lets resume.",
+	LikelyWell: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to be well",
+	LikelyMild: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a mild mental disorder",
+	LikelyMod: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have moderate mental disorder",
+	LikelySever: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a severe mental disorder",
 	questions: [
-		"question 1",
-		"question 2", 
+		" During the last 30 days, about how often did you feel tired out for no good reason?",
+		" During the last 30 days, about how often did you feel nervous?",
+		" During the last 30 days, about how often did you feel so nervous that nothing could calm you down?",
+		" During the last 30 days, about how often did you feel hopeless?",
+		" During the last 30 days, about how often did you feel restless or fidgety?",
+		" During the last 30 days, about how often did you feel so restless you could not sit still?",
+		" During the last 30 days, about how often did you feel depressed?",
+		" During the last 30 days, about how often did you feel that everything was an effort?",
+		" During the last 30 days, about how often did you feel so sad that nothing could cheer you up?",
+		" During the last 30 days, about how often did you feel worthless?",
+		
 	]
 };
 
 exports.diagnosisGen = function(questions){
+	var total = 0;
+	for(var i = 0; i < questions.length; i++){
+		total += questions[i];
+	}
+	if(total < 20){
+		return ["LikelyWell", total];
+	}
+	else if(total >= 20 && total < 25){
+		return ["LikelyMild", total];
+	}
+	else if(total >= 25 && total < 30){
+		return ["LikelyMod", total];
+	}
+	else{
+		return ["LikelySever", total];
+	}
 
 };
