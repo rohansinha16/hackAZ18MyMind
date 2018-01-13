@@ -9,6 +9,7 @@ const getSession = (alexaid) => {
         sessions[alexaid] = {
             state: 0,
             question: 0,
+            scale: 0,
             answers: []
         };
     }
@@ -107,16 +108,24 @@ function onIntent(intentRequest, session, callback) {
             handleStop(intent, session, callback);
         }
         else if (intentName == "depressionIntent"){
+            sessions[getSeassion()].scale = 0;
             handleDepression(intent, session, callback);
         }
-        else if (intentName == "anxietyIntent"){}
-        else if (intentName == "sleepIntent"){}
-        else if (intentName == "stressIntent"){}
+        else if (intentName == "anxietyIntent"){
+            sessions[getSeassion()].scale = 1;
+        }
+        else if (intentName == "sleepIntent"){
+            sessions[getSeassion()].scale = 2;
+        }
+        else if (intentName == "stressIntent"){
+            sessions[getSeassion()].scale = 3;
+        }
         else{
             handleErrorIntent(intent,session,callback);
         }
     }
     else if(state == 2){
+        var scale = sessions[getSeassion()].scale
         if(intentName == "AMAZON.HelpIntent"){
             handleHelpRequest(intent, session, callback);
         }
@@ -124,7 +133,18 @@ function onIntent(intentRequest, session, callback) {
             handleStop(intent, session, callback);
         }
         else if(intentName == "answerIntent"){
-            handleAnswer(intent, session, callback, forms.depression,forms.diagnosisisDep)
+            if(scale = 0){
+                handleAnswer(intent, session, callback, forms.depression,forms.diagnosisisDep)
+            }
+            else if (scale == 1){
+                
+            }
+            else if (scale == 2){
+                
+            }
+            else if (scale == 3){
+                
+            }
         }
         else{
             handleErrorIntent(intent,session,callback);
