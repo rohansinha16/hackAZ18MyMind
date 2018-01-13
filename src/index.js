@@ -113,7 +113,7 @@ function onIntent(intentRequest, session, callback) {
         else if (intentName == "sleepIntent"){}
         else if (intentName == "stressIntent"){}
         else{
-            throw "Invalid intent";
+            handleErrorIntent(intent,session,callback);
         }
     }
     else if(state == 2){
@@ -127,7 +127,9 @@ function onIntent(intentRequest, session, callback) {
             handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
         }
     }
-    console.log("stages skipped");
+    else{
+        handleErrorIntent(intent,session,callback);
+    }
 }
 
 /**
