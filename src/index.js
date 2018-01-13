@@ -96,7 +96,7 @@ function onIntent(intentRequest, session, callback) {
             handleEntry(intent, session, callback);
         }
         else{
-            throw "Invalid intent";
+            handleErrorIntent(intent,session,callback);
         }
     }
     else if(state == 1){
@@ -233,6 +233,15 @@ function handleEntry(intent, session, callback){
     var endSession = false;
     var speechOutput = " Which entry would you like to make today? You can do depression, anxiety, sleep, or stress."
     var reprompt = "Please say the name of the entry you would like to create.";
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
+}
+
+function handleErrorIntent(intent, session, callback){
+    var id = getSession(session.sessionId);
+    var header = "My Mind";
+    var endSession = false;
+    var speechOutput = " I'm sorry, I didn't understand that response. Please try again or say 'help' for instructions."
+    var reprompt = speechOutput;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
