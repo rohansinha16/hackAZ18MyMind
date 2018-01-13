@@ -2,8 +2,6 @@ var forms = require('./forms.js');
 
 const sessions = {};
 
-var startState;
-
 const getSession = (alexaid) => {
     if(!(alexaid in sessions)){
         sessions[alexaid] = {
@@ -108,19 +106,19 @@ function onIntent(intentRequest, session, callback) {
             handleStop(intent, session, callback);
         }
         else if (intentName == "depressionIntent"){
-            sessions[getSeassion()].scale = 0;
+            sessions[getSession()].scale = 0;
             handleDepression(intent, session, callback);
         }
         else if (intentName == "anxietyIntent"){
-            sessions[getSeassion()].scale = 1;
+            sessions[getSession()].scale = 1;
             handleAnxiety(intent, session, callback);
         }
         else if (intentName == "sleepIntent"){
-            sessions[getSeassion()].scale = 2;
+            sessions[getSession()].scale = 2;
             handleSleep(intent, session, callback);
         }
         else if (intentName == "stressIntent"){
-            sessions[getSeassion()].scale = 3;
+            sessions[getSession()].scale = 3;
             handleStress(intent, session, callback);
         }
         else{
@@ -128,7 +126,7 @@ function onIntent(intentRequest, session, callback) {
         }
     }
     else if(state == 2){
-        var scale = sessions[getSeassion()].scale
+        var scale = sessions[getSession()].scale
         if(intentName == "AMAZON.HelpIntent"){
             handleHelpRequest(intent, session, callback);
         }
@@ -136,17 +134,17 @@ function onIntent(intentRequest, session, callback) {
             handleStop(intent, session, callback);
         }
         else if(intentName == "answerIntent"){
-            if(scale = 0){
-                handleAnswer(intent, session, callback, forms.depression,forms.diagnosisDep)
+            if(scale == 0){
+                handleAnswer(intent, session, callback, forms.depression,forms.diagnosisDep);
             }
             else if (scale == 1){
-                handleAnswer(intent, session, callback, forms.anxiety,forms.diagnosisAnx)
+                handleAnswer(intent, session, callback, forms.anxiety,forms.diagnosisAnx);
             }
             else if (scale == 2){
-                handleAnswer(intent, session, callback, forms.sleep,forms.diagnosisSlp)
+                handleAnswer(intent, session, callback, forms.sleep,forms.diagnosisSlp);
             }
             else if (scale == 3){
-                handleAnswer(intent, session, callback, forms.stress,forms.diagnosisStr)
+                handleAnswer(intent, session, callback, forms.stress,forms.diagnosisStr);
             }
         }
         else{
@@ -301,7 +299,7 @@ function handleEntry(intent, session, callback){
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
-    var speechOutput = " Which entry would you like to make today? You can do depression, anxiety, sleep, or stress."
+    var speechOutput = " Which entry would you like to make today? You can do depression, anxiety, sleep, or stress.";
     var reprompt = "Please say the name of the entry you would like to create.";
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
@@ -310,7 +308,7 @@ function handleErrorIntent(intent, session, callback){
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
-    var speechOutput = " I'm sorry, I didn't understand that response. Please try again or say 'help' for instructions."
+    var speechOutput = " I'm sorry, I didn't understand that response. Please try again or say 'help' for instructions.";
     var reprompt = speechOutput;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
