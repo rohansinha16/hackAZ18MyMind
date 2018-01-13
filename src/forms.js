@@ -59,28 +59,26 @@ exports.diagnosisDep = function(questions){
 	}
 	if((questions[7] == 4 && questions[9] == 4) || (questions[1] == 4 && questions[3] == 4 && questions[5] == 4)){
 		if(countFour >= 4){
-			return "majorDep";
+			return ["majorDep", total];
 		}
 		else if(countFour + countThree >= 3){
-			return "ProbableMajorDepressiveEpisode";
+			return ["ProbableMajorDepressiveEpisode", total];
 		}
 		else if(countFour + countThree >= 2){
-			return "PossibleMajorDepressiveEpisode";
+			return ["PossibleMajorDepressiveEpisode", total];
 		}
 		else if(total > 16){
-			return "SubthreshholdDepressionSymptoms";
+			return ["SubthreshholdDepressionSymptoms", total];
 		}
 		else{
-			return "NoClinicalSignificance";
+			return ["NoClinicalSignificance", total];
 		}
 	}
+	else if(total > 16){
+		return ["SubthreshholdDepressionSymptoms", total];
+	}
 	else{
-		if(total > 16){
-			return "SubthreshholdDepressionSymptoms";
-		}
-		else{
-			return "NoClinicalSignificance";
-		}
+		return ["NoClinicalSignificance", total];
 	}
 };
 
@@ -132,16 +130,16 @@ exports.diagnosisAnx = function(questions){
 		total += questions[i];
 	}
 	if(total < 5){
-		return "NoSig";
+		return ["NoSig", total];
 	}
 	else if(total >= 5 && total < 10){
-		return "MildAnxiety";
+		return ["MildAnxiety", total];
 	}
 	else if(total >= 10 && total < 15){
-		return "ModAnxiety";
+		return ["ModAnxiety", total];
 	}
 	else{
-		return "SeverAnxiety";
+		return ["SeverAnxiety", total];
 	}
 };
 
