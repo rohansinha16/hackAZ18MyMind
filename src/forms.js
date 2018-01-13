@@ -143,6 +143,7 @@ exports.General = {
 		"question 2",
 	]
 };
+
 exports.diagnosisStr = function(questions){
 
 };
