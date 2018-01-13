@@ -208,7 +208,7 @@ function handleHelpRequest(intent, session, callback) {
     }
     else if(sessions[getSession()].state == 1){
         speechOutput = "To select which mental health entry you would like to make go ahead and say one of the following, "+
-            "depression, anxiety, sleep, or stress. You will then be asked a few questions and your results will returned based of a "+
+            "depression, anxiety, sleep, or stress. You will then be given a set of statements to rate and your results will be returned based of a "+
             "clinically used scale.";
         reprompt = speechOutput;
     }
