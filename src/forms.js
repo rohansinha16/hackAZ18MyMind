@@ -124,17 +124,25 @@ exports.anxiety = {
 		" Respond with no or between 0 and 3. 0 being not at all difficult. 1 being somewhat difficult. 2 being very" +
 		" difficult. 3 being extremely difficult. And No, for does not apply.",
 	]
-	if(total < 5){
-			return "NoSig";
-	if(total > 4, <10){
-			return "MildAnxiety";
-	if(total > 9, <15){
-			return "ModAnxiety";
-	if(total >14){
-			return "SeverAnxiety";
 };
 
 exports.diagnosisAnx = function(questions){
+	var total = 0;
+	for(var i = 0; i < questions.length; i++){
+		total += questions[i];
+	}
+	if(total < 5){
+		return "NoSig";
+	}
+	else if(total >= 5 && total < 10){
+		return "MildAnxiety";
+	}
+	else if(total >= 10 && total < 15){
+		return "ModAnxiety";
+	}
+	else{
+		return "SeverAnxiety";
+	}
 };
 
 exports.stress = {
