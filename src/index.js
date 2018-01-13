@@ -106,7 +106,7 @@ function onSessionEnded(sessionEndedRequest, session) {
 
 function getWelcomeResponse(callback) {
     var speechOutput = "Welcome to the My Mind Skill. If you would like to make a new entry please say 'new entry'. If you would"+
-        " like to check you averag scores please say 'check my scores'.";
+        " like to check you average scores please say 'check my scores'.";
     var reprompt = "";
     var header = "My Mind";
     var endSession = false;
