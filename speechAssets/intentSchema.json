@@ -1,23 +1,56 @@
 {
-  "intents": [
-    {
-      "intent": "AMAZON.YesIntent"
-    }, {
-      "intent": "AMAZON.NoIntent"
-    }, {
-      "intent": "AMAZON.RepeatIntent"
-    }, {
-      "intent": "AMAZON.StopIntent"
-    }, {
-      "intent": "AMAZON.HelpIntent"
-    }, {
-      "intent": "sendRequest",
-      "slots": [
+  "languageModel": {
+    "intents": [
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "answerIntent",
+        "samples": [
+          "{surveyAnswer}",
+          "It's a {surveyAnswer}",
+          "I think about {surveyAnswer}",
+          "around {surveyAnswer}",
+          "about {surveyAnswer}",
+          "it is {surveyAnswer}"
+        ],
+        "slots": [
           {
-            "name": "command",
-            "type": "AMAZON.LITERAL"
+            "name": "surveyAnswer",
+            "type": "AMAZON.NUMBER"
           }
-      ]
-    }
-  ]
+        ]
+      },
+      {
+        "name": "noIntent",
+        "samples": [
+          "no",
+          "negative"
+        ],
+        "slots": []
+      },
+      {
+        "name": "yesIntent",
+        "samples": [
+          "Yes",
+          "okay",
+          "alright",
+          "yep",
+          "sure",
+          "all right"
+        ],
+        "slots": []
+      }
+    ],
+    "invocationName": "my mind"
+  }
 }
