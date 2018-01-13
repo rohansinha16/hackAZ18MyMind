@@ -12,9 +12,8 @@ exports.depression = {
 		" 0 indicates not at all or less than 1 day. 1 indicates 1 to 2 days." +
 		" 2 indicates 3 to 4 days. 3 indicates 5 to 7 days. And 4 indicates nearly" +
 		" everyday for 2 weeks. Lets resume. ",
-	goal: "lower",
+	checker: "diagnosisDep",
 	majorDep: "Based on the scores you have provided; your possible depressive symptom category is Major Depressive Episode.",
-	
 	ProbableMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Probable Major Depressive Episode.",
 	PossibleMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Possible major depressive episode.",
 	SubthreshholdDepressionSymptoms: "Based on the scores you have provided; your possible depressive symptom category is Subthreshhold depression symptoms.",
@@ -94,7 +93,7 @@ exports.anxiety = {
 	help: "To answer these questions, please say a number between 0 and 3. 0 indicates not at all sure." +
 		" 1 indicates several days. 2 indicates over half the days. 3 indicates nearly every day." +
 		" Lets resume.",
-	goal: "lower",
+	checker: "diagnosisAnx",
 	MildAnxiety: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
 		" category is Mild Anxiety",
 	ModAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
@@ -155,7 +154,7 @@ exports.stress = {
 	help: "To answer these questions, please say a number between 0 and 4. 0 indicates never." +
 		" 1 indicates almost never. 2 indicates sometimes. 3 indicates fairly often." +
 		" And 4 indicts very often. Lets resume.",
-	goal: "lower",
+	checker: "diagnosisStr",
 	LowStress: "Based on the scores you have provided; your possible percieved stress category shows low perceived stress.",
  	ModStress: "Based on the scores you have provided; your possible perceived stress category shows moderate perceived stress.",
 	HighStress: "Based on the scores you have provided; your possible perceived stress category shows high perceived stress.",
@@ -191,21 +190,6 @@ exports.diagnosisStr = function(questions){
 
 };
 
-exports.sleep = {
-	min: 0,
-	max: 0,
-	intro: "",
-	outro: "",
-	help: "",
-	goal: "",
-	questions: [
-		"question 1",
-		"question 2",
-	]
-};
-
-exports.diagnosisSlp = function(questions){
-};
 exports.General = {
 	min: 0,
 	max: 0,
