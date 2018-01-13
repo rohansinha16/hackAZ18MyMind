@@ -105,7 +105,8 @@ function onSessionEnded(sessionEndedRequest, session) {
 // ------- Skill specific logic -------
 
 function getWelcomeResponse(callback) {
-    var speechOutput = "Say yes.";
+    var speechOutput = "Welcome to the My Mind Skill. If you would like to make a new entry please say 'new entry'. If you would"+
+        " like to check you averag scores please say 'check my scores'.";
     var reprompt = "";
     var header = "My Mind";
     var endSession = false;
