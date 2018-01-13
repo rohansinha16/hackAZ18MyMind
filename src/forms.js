@@ -43,6 +43,7 @@ exports.depression = {
 	]
 	
 };
+
 exports.diagnosisDep = function(questions){
 	var total = 0;
 	var countFour = 0;
@@ -95,6 +96,7 @@ exports.anxiety = {
 		"question 2",
 	]
 };
+
 exports.diagnosisAnx = function(questions){
 };
 
@@ -126,5 +128,6 @@ exports.sleep = {
 		"question 2",
 	]
 };
+
 exports.diagnosisSlp = function(questions){
 };
