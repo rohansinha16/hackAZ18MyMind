@@ -144,6 +144,6 @@ exports.General = {
 	]
 };
 
-exports.diagnosisStr = function(questions){
+exports.diagnosisGen = function(questions){
 
 };
