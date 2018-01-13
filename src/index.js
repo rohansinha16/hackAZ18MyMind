@@ -117,9 +117,12 @@ function handleYes(intent, session, callback){
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
+    console.log("attempt to use form");
     var depression = forms.depression();
+    console.log("opened form");
     var speechOutput = depression.intro + " " + depression.questions[0];
-    var reprompt = "depression.questions[0]";
+    console.log(speechOutput);
+    var reprompt = depression.questions[0];
     callback(sessionAttributes, buildSpeechletResponse(header, speechOutput, reprompt, shouldEndSession));
 }
 
