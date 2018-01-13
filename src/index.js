@@ -2,6 +2,7 @@ var forms = require('./forms.js');
 
 const sessions = {};
 
+var startState;
 
 const getSession = (alexaid) => {
     if(!(alexaid in sessions)){
@@ -13,6 +14,7 @@ const getSession = (alexaid) => {
     }
     return alexaid;
 };
+
 
 // Route the incoming request based on type (LaunchRequest, IntentRequest,
 // etc.) The JSON body of the request is provided in the event parameter.
@@ -59,7 +61,10 @@ exports.handler = function (event, context) {
  */
 function onSessionStarted(sessionStartedRequest, session) {
     // add any session init logic here
-    sessions[session.sessionId]
+    sessions[session.sessionId];
+    // if the skill restarts set the session to 0
+    // can possibly handle this differently
+    sessions[getSession()].state = 0;
 }
 
 /**
@@ -76,9 +81,10 @@ function onIntent(intentRequest, session, callback) {
 
     var intent = intentRequest.intent;
     var intentName = intentRequest.intent.name;
-
+    var state = sessions[getSession()].state;
+    console.log(sessions[getSession()].state);
     // dispatch custom intents to handlers here
-    if(session.state == 0){
+    if(state == 0){
         if(intentName == "AMAZON.HelpIntent"){
             handleHelpRequest(intent, session, callback);
         }
@@ -86,14 +92,14 @@ function onIntent(intentRequest, session, callback) {
             handleStop(intent, session, callback);
         }
         else if(intentName == "newEntryIntent"){
-            session.stage = 1;
+            sessions[getSession()].state = 1;
             handleEntry(intent, session, callback);
         }
         else{
             throw "Invalid intent";
         }
     }
-    else if(session.state == 1){
+    else if(state == 1){
         if(intentName == "AMAZON.HelpIntent"){
             handleHelpRequest(intent, session, callback);
         }
@@ -110,7 +116,7 @@ function onIntent(intentRequest, session, callback) {
             throw "Invalid intent";
         }
     }
-    else if(session.state == 2){
+    else if(state == 2){
         if(intentName == "AMAZON.HelpIntent"){
             handleHelpRequest(intent, session, callback);
         }
@@ -154,7 +160,7 @@ function handleDepression(intent, session, callback){
     var speechOutput = depression.intro + " " + depression.questions[0];
     console.log(speechOutput);
     var reprompt = depression.questions[0];
-    session.state = 2;
+    sessions[getSession()].state = 2;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
@@ -190,18 +196,18 @@ function handleHelpRequest(intent, session, callback) {
     var endSession = false;
     var speechOutput = "";
     var reprompt = "";
-    if(session.state == 0){
+    if(sessions[getSession()].state == 0){
         speechOutput = "To create a new entry and help track your mental health go ahead and say, 'new entry'. Or if you would like "+
             "to quit, go ahead and say 'quit'.";
         reprompt = speechOutput;
     }
-    else if(session.state == 1){
+    else if(sessions[getSession()].state == 1){
         speechOutput = "To select which mental health entry you would like to make go ahead and say one of the following, "+
             "depression, anxiety, sleep, or stress. You will then be asked a few questions and your results will returned based of a "+
             "clinically used scale.";
         reprompt = speechOutput;
     }
-    else if(session.state == 2){
+    else if(sessions[getSession()].state == 2){
         speechOutput = "To answer the given statement, please say a number between zero and four. Your responses to these statements will be graded "+
             "using an algorithim used by actual clinicians.";
         reprompt = speechOutput;
@@ -217,7 +223,7 @@ function handleStop(intent, session, callback){
     var reprompt = "";
     //Probably don't want to delete on exit, make a new intent to handle deleteion of data. Reset skill stage instead.
     //delete(sessions[id]); 
-    session.state = 0;
+    sessions[getSession()].state = 0;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
