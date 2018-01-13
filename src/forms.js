@@ -42,7 +42,7 @@ exports.depression = {
 		"I could not focus on the important things",
 	]
 	
-}
+};
 exports.diagnosisDep = function(questions){
 	var total = 0;
 	var countFour = 0;
@@ -81,7 +81,7 @@ exports.diagnosisDep = function(questions){
 			return "NoClinicalSignificance";
 		}
 	}
-}
+};
 
 exports.anxiety = {
 	min: 0,
@@ -94,9 +94,9 @@ exports.anxiety = {
 		"question 1",
 		"question 2",
 	]
-}
+};
 exports.diagnosisAnx = function(questions){
-}
+};
 
 exports.stress = {
 	min: 0,
@@ -109,10 +109,10 @@ exports.stress = {
 		"question 1",
 		"question 2",
 	]
-}
+};
 exports.diagnosisStr = function(questions){
 
-}
+};
 
 exports.sleep = {
 	min: 0,
@@ -125,10 +125,6 @@ exports.sleep = {
 		"question 1",
 		"question 2",
 	]
-}
+};
 exports.diagnosisSlp = function(questions){
-}
-
-
-
-
+};
