@@ -128,7 +128,18 @@ function onIntent(intentRequest, session, callback) {
     else if(state == 2){
         var scale = sessions[getSession()].scale
         if(intentName == "AMAZON.HelpIntent"){
-            handleHelpRequest(intent, session, callback);
+            if(scale == 0){
+                handleHelpRequest(intent, session, callback, forms.depression);
+            }
+            else if (scale == 1){
+                handleHelpRequest(intent, session, callback, forms.anxiety);
+            }
+            else if (scale == 2){
+                handleHelpRequest(intent, session, callback, forms.sleep);
+            }
+            else if (scale == 3){
+                handleHelpRequest(intent, session, callback, forms.stress);
+            }
         }
         else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
             handleStop(intent, session, callback);
@@ -258,7 +269,7 @@ function handleAnswer(intent, session, callback, form, check){
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
-function handleHelpRequest(intent, session, callback) {
+function handleHelpRequest(intent, session, callback, form) {
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
@@ -276,8 +287,7 @@ function handleHelpRequest(intent, session, callback) {
         reprompt = speechOutput;
     }
     else if(sessions[getSession()].state == 2){
-        speechOutput = "To answer the given statement, please say a number between zero and four. Your responses to these statements will be graded "+
-            "using an algorithim used by actual clinicians.";
+        speechOutput = form.help;
         reprompt = speechOutput;
     } 
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
