@@ -82,3 +82,22 @@ exports.diagnosisDep = function(questions){
 		}
 	}
 }
+
+exports.anxiety = {
+}
+exports.diagnosisAnx = {
+}
+
+exports.stress = {
+}
+exports.diagnosisStr = {
+}
+
+exports.sleep = {
+}
+exports.diagnosisSlp = {
+}
+
+
+
+
