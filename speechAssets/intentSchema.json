@@ -3,20 +3,29 @@
     "intents": [
       {
         "name": "AMAZON.CancelIntent",
-      }, {
-        "name": "AMAZON.StopIntent",
-      }, {
-        "name": "AMAZON.YesIntent",
-      }, {
-        "name": "AMAZON.NoIntent",
-      }, {
+        "samples": []
+      },
+      {
         "name": "AMAZON.HelpIntent",
         "samples": [
           "help",
           "how do I answer",
           "what do I do"
         ]
-      }, {
+      },
+      {
+        "name": "AMAZON.NoIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.YesIntent",
+        "samples": []
+      },
+      {
         "name": "answerIntent",
         "samples": [
           "{surveyAnswer}",
@@ -32,6 +41,26 @@
             "type": "AMAZON.NUMBER"
           }
         ]
+      },
+      {
+        "name": "depressionIntent",
+        "samples": [
+          "depression",
+          "depression log",
+          "Lets do a depression log",
+          "track depression"
+        ],
+        "slots": []
+      },
+      {
+        "name": "newEntryIntent",
+        "samples": [
+          "new entry",
+          "new log",
+          "new survey",
+          "log"
+        ],
+        "slots": []
       }
     ],
     "invocationName": "my mind"
