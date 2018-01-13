@@ -124,12 +124,10 @@ function onIntent(intentRequest, session, callback) {
             handleStop(intent, session, callback);
         }
         else if(intentName == "answerIntent"){
-            if(intent.slots.surveyAnswer.value == null){
-                handleErrorIntent(intent, session, callback);
-            }
-            else{
-                handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
-            }
+            handleAnswer(intent, session, callback, forms.depression,forms.diagnosisisDep)
+        }
+        else{
+            handleErrorIntent(intent,session,callback);
         }
     }
     else{
