@@ -2,11 +2,13 @@ var forms = require('./forms.js');
 
 const sessions = {};
 
+
 const getSession = (alexaid) => {
     if(!(alexaid in sessions)){
         sessions[alexaid] = {
             state: 0,
             question: 0,
+            stage: 0,
             answers: []
         };
     }
@@ -77,21 +79,41 @@ function onIntent(intentRequest, session, callback) {
     var intentName = intentRequest.intent.name;
 
     // dispatch custom intents to handlers here
-    if(intentName == "AMAZON.HelpIntent"){
-        handleGetHelpRequest(intent, session, callback);
+    if(session.stage == 0){
+        if(intentName == "AMAZON.HelpIntent"){
+            handleGetHelpRequest(intent, session, callback);
+        }
+        else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
+            handleStop(intent, session, callback);
+        }
+        else if(intentName == "newEntryIntent"){
+            session.stage = 1;
+            handleEntry(intent, session, callback);
+        }
+        else{
+            throw "Invalid intent";
+        }
     }
-    else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
-        handleStop(intent, session, callback);
+    if(session.stage == 1){
+        if(intentName == "AMAZON.HelpIntent"){
+            handleGetHelpRequest(intent, session, callback);
+        }
+        else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
+            handleStop(intent, session, callback);
+        }
+        else if (intentName == "depressionIntent"){}
+        else if (intentName == "anxietyIntent"){}
+        else if (intentName == "sleepIntent"){}
+        else if (intentName == "stressIntent"){}
     }
+    
     else if(intentName == "AMAZON.YesIntent"){
         handleYes(intent, session, callback);
-    }
+       }
     else if(intentName == "answerIntent"){
         handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
-    }
-    else{
-        throw "Invalid intent";
-    }
+      }
+    
 }
 
 /**
@@ -159,11 +181,20 @@ function handleHelpRequest(intent, session, callback) {
 
 function handleStop(intent, session, callback){
     var id = getSession(session.sessionId);
-    var header = "Trivia";
+    var header = "My Mind";
     var endSession = true;
     var speechOutput = "Thank you for playing!";
     var reprompt = "";
     delete(sessions[id]); 
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
+}
+
+function handleEntry(intent, session, callback){
+    var id = getSession(session.sessionId);
+    var header = "My Mind";
+    var endSession = false;
+    var speechOutput = " Which entry would you like to make today? You can do depression, anxiety, sleep, or stress."
+    var reprompt = "Please say the name of the entry you would like to create.";
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
