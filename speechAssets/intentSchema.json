@@ -3,21 +3,20 @@
     "intents": [
       {
         "name": "AMAZON.CancelIntent",
-        "samples": []
-      },
-      {
+      }, {
+        "name": "AMAZON.StopIntent",
+      }, {
+        "name": "AMAZON.YesIntent",
+      }, {
+        "name": "AMAZON.NoIntent",
+      }, {
         "name": "AMAZON.HelpIntent",
         "samples": [
           "help",
           "how do I answer",
           "what do I do"
         ]
-      },
-      {
-        "name": "AMAZON.StopIntent",
-        "samples": []
-      },
-      {
+      }, {
         "name": "answerIntent",
         "samples": [
           "{surveyAnswer}",
@@ -33,26 +32,6 @@
             "type": "AMAZON.NUMBER"
           }
         ]
-      },
-      {
-        "name": "noIntent",
-        "samples": [
-          "no",
-          "negative"
-        ],
-        "slots": []
-      },
-      {
-        "name": "yesIntent",
-        "samples": [
-          "Yes",
-          "okay",
-          "alright",
-          "yep",
-          "sure",
-          "all right"
-        ],
-        "slots": []
       }
     ],
     "invocationName": "my mind"
