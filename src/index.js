@@ -118,7 +118,7 @@ function handleYes(intent, session, callback){
     var header = "My Mind";
     var endSession = false;
     console.log("attempt to use form");
-    var depression = forms.depression();
+    var depression = forms.depression;
     console.log("opened form");
     var speechOutput = depression.intro + " " + depression.questions[0];
     console.log(speechOutput);
@@ -133,7 +133,6 @@ function handleAnswer(intent, session, callback, form, check){
     var speechOutput = "";
     var reprompt = "";
     var ans = parseInt(intent.slots.surveyAnswer.value);
-    var form = form();
     if(ans >= form.min && ans <= form.max){
         sessions[id].answers.push(ans);
         sessions[id].question++;
