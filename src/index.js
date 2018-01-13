@@ -124,7 +124,12 @@ function onIntent(intentRequest, session, callback) {
             handleStop(intent, session, callback);
         }
         else if(intentName == "answerIntent"){
-            handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
+            if(intent.slots.surveyAnswer.value == null){
+                handleErrorIntent(intent, session, callback);
+            }
+            else{
+                handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
+            }
         }
     }
     else{
