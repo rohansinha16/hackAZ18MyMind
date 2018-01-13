@@ -84,18 +84,49 @@ exports.diagnosisDep = function(questions){
 }
 
 exports.anxiety = {
+	min: 0,
+	max: 0,
+	intro: "",
+	outro: "",
+	help: "",
+	goal: "",
+	questions: [
+		"question 1",
+		"question 2",
+	]
 }
-exports.diagnosisAnx = {
+exports.diagnosisAnx = function(questions){
 }
 
 exports.stress = {
+	min: 0,
+	max: 0,
+	intro: "",
+	outro: "",
+	help: "",
+	goal: "",
+	questions: [
+		"question 1",
+		"question 2",
+	]
 }
-exports.diagnosisStr = {
+exports.diagnosisStr = function(questions){
+
 }
 
 exports.sleep = {
+	min: 0,
+	max: 0,
+	intro: "",
+	outro: "",
+	help: "",
+	goal: "",
+	questions: [
+		"question 1",
+		"question 2",
+	]
 }
-exports.diagnosisSlp = {
+exports.diagnosisSlp = function(questions){
 }
 
 
