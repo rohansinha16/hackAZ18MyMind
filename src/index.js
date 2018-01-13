@@ -8,7 +8,8 @@ const getSession = (alexaid) => {
             state: 0,
             question: 0,
             scale: 0,
-            answers: []
+            answers: [],
+            resultsDB: {}
         };
     }
     return alexaid;
@@ -76,7 +77,6 @@ function onLaunch(launchRequest, session, callback) {
  * Called when the user specifies an intent for this skill.
  */
 function onIntent(intentRequest, session, callback) {
-
     var intent = intentRequest.intent;
     var intentName = intentRequest.intent.name;
     var state = sessions[getSession()].state;
@@ -245,7 +245,26 @@ function handleAnswer(intent, session, callback, form, check){
             reprompt = speechOutput;
         }
         else{
-            speechOutput = form[check(sessions[id].answers)];
+            var d = new Date();
+            var key = d.getMonth()+1;
+            if(key < 10){
+                key = "0" + key;
+            }
+            key = d.getFullYear() + "-" + key + "-";
+            if(d.getDate() < 10){
+                key += "0"
+            }
+            key += d.getDate();
+            var key2 = d.getFullYear() + "-W" + d.getWeek();
+            var results = check(sessions[id].answers);
+            sessions[id].resultsDB[key][sessions[id].scale] = {
+                answers: sessions[id].answers,
+                total: results[1],
+                result: results[0]
+            };
+            sessions[id].resultsDB[key2][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
+            speechOutput = form[results[0]];
+            sessions[id].answers = [];
             reprompt = "";
         }
     }
@@ -308,6 +327,18 @@ function handleErrorIntent(intent, session, callback){
     var speechOutput = " I'm sorry, I didn't understand that response. Please try again or say 'help' for instructions.";
     var reprompt = speechOutput;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
+}
+
+// Returns the ISO week of the date.
+Date.prototype.getWeek = function() {
+  var date = new Date(this.getTime());
+   date.setHours(0, 0, 0, 0);
+  // Thursday in current week decides the year.
+  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  // January 4 is always in week 1.
+  var week1 = new Date(date.getFullYear(), 0, 4);
+  // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
 }
 
 // ------- Helper functions to build responses for Alexa -------
