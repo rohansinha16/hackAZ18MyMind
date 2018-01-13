@@ -215,7 +215,7 @@ exports.General = {
 	goal: "",
 	questions: [
 		"question 1",
-		"question 2",
+		"question 2", 
 	]
 };
 
