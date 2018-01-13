@@ -1,9 +1,13 @@
+var forms = require('./forms.js');
+
 const sessions = {};
 
 const getSession = (alexaid) => {
     if(!(alexaid in sessions)){
         sessions[alexaid] = {
-
+            state: 0,
+            question: 0,
+            answers: []
         };
     }
     return alexaid;
@@ -21,10 +25,9 @@ exports.handler = function (event, context) {
          * prevent someone else from configuring a skill that sends requests to this function.
          */
 
-    // if (event.session.application.applicationId !== "") {
-    //     context.fail("Invalid Application ID");
-    //  }
-
+        // if (event.session.application.applicationId !== "") {
+        //     context.fail("Invalid Application ID");
+        //  }
         if (event.session.new) {
             onSessionStarted({requestId: event.request.requestId}, event.session);
         }
@@ -77,8 +80,14 @@ function onIntent(intentRequest, session, callback) {
     if(intentName == "AMAZON.HelpIntent"){
         handleGetHelpRequest(intent, session, callback);
     }
-    else if(intentName == "AMAZON.StopIntent"){
-        handleFinishSessionRequest(intent, session, callback);
+    else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
+        handleStop(intent, session, callback);
+    }
+    else if(intentName == "AMAZON.YesIntent"){
+        handleYes(intent, session, callback);
+    }
+    else if(intentName == "answerIntent"){
+        handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
     }
     else{
         throw "Invalid intent";
@@ -96,11 +105,48 @@ function onSessionEnded(sessionEndedRequest, session) {
 // ------- Skill specific logic -------
 
 function getWelcomeResponse(callback) {
-    var speechOutput = "";
+    var speechOutput = "Say yes.";
     var reprompt = "";
-    var header = "";
+    var header = "My Mind";
     var shouldEndSession = false;
     var sessionAttributes = {};
+    callback(sessionAttributes, buildSpeechletResponse(header, speechOutput, reprompt, shouldEndSession));
+}
+
+function handleYes(intent, session, callback){
+    var id = getSession(session.sessionId);
+    var header = "My Mind";
+    var endSession = false;
+    var depression = forms.depression();
+    var speechOutput = depression.intro + " " + depression.questions[0];
+    var reprompt = "depression.questions[0]";
+    callback(sessionAttributes, buildSpeechletResponse(header, speechOutput, reprompt, shouldEndSession));
+}
+
+function handleAnswer(intent, session, callback, form, check){
+    var id = getSession(session.sessionId);
+    var header = "My Mind";
+    var endSession = false;
+    var speechOutput = "";
+    var reprompt = "";
+    var ans = parseInt(intent.slots.surveyAnswer.value);
+    var form = form();
+    if(ans >= form.min && ans <= form.max){
+        sessions[id].answers.push(ans);
+        sessions[id].question++;
+        if(sessions[id].question < form.questions.length){
+            speechOutput = form.questions[sessions[id].question];
+            reprompt = speechOutput;
+        }
+        else{
+            speechOutput = form[check(sessions[id].answers)];
+            reprompt = "";
+        }
+    }
+    else{
+        speechOutput = "Please choose a number between " + form.min + " and " + form.max + ".";
+        reprompt = form.questions[sessions[id].question];
+    }
     callback(sessionAttributes, buildSpeechletResponse(header, speechOutput, reprompt, shouldEndSession));
 }
 
@@ -108,10 +154,14 @@ function handleHelpRequest(intent, session, callback) {
 
 }
 
-function handleFinishSessionRequest(intent, session, callback) {
-    // End the session with a "Good bye!" if the user wants to quit the game
-    callback(session.attributes,
-        buildSpeechletResponseWithoutCard("Good bye! Thank you for visiting the bank", "", true));
+function handleStop(intent, session, callback){
+    var id = getSession(session.sessionId);
+    var header = "Trivia";
+    var endSession = true;
+    var speechOutput = "Thank you for playing!";
+    var reprompt = "";
+    delete(sessions[id]); 
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 // ------- Helper functions to build responses for Alexa -------
