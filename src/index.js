@@ -94,26 +94,34 @@ function onIntent(intentRequest, session, callback) {
             throw "Invalid intent";
         }
     }
-    if(session.stage == 1){
+    else if(session.stage == 1){
         if(intentName == "AMAZON.HelpIntent"){
             handleGetHelpRequest(intent, session, callback);
         }
         else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
             handleStop(intent, session, callback);
         }
-        else if (intentName == "depressionIntent"){}
+        else if (intentName == "depressionIntent"){
+            handleDepression(intent, session, callback);
+        }
         else if (intentName == "anxietyIntent"){}
         else if (intentName == "sleepIntent"){}
         else if (intentName == "stressIntent"){}
+        else{
+            throw "Invalid intent";
+        }
     }
-    
-    else if(intentName == "AMAZON.YesIntent"){
-        handleYes(intent, session, callback);
-       }
-    else if(intentName == "answerIntent"){
-        handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
-      }
-    
+    else if(session.stage == 2){
+        if(intentName == "AMAZON.HelpIntent"){
+            handleGetHelpRequest(intent, session, callback);
+        }
+        else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
+            handleStop(intent, session, callback);
+        }
+        else if(intentName == "answerIntent"){
+            handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
+        }
+    }
 }
 
 /**
@@ -136,7 +144,7 @@ function getWelcomeResponse(callback) {
     callback(sessionAttributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
-function handleYes(intent, session, callback){
+function handleDepression(intent, session, callback){
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
@@ -146,6 +154,7 @@ function handleYes(intent, session, callback){
     var speechOutput = depression.intro + " " + depression.questions[0];
     console.log(speechOutput);
     var reprompt = depression.questions[0];
+    session.stage = 2;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
@@ -176,7 +185,28 @@ function handleAnswer(intent, session, callback, form, check){
 }
 
 function handleHelpRequest(intent, session, callback) {
-
+    var id = getSession(session.sessionId);
+    var header = "My Mind";
+    var endSession = false;
+    var speechOutput = "";
+    var reprompt = "";
+    if(session.stage == 0){
+        speechOutput = "To create a new entry and help track your mental health go ahead and say, 'new entry'. Or if you would like "+
+            "to quit, go ahead and say 'quit'.";
+        reprompt = speechOutput;
+    }
+    else if(session.stage == 1){
+        speechOutput = "To select which mental health entry you would like to make go ahead and say one of the following, "+
+            "depression, anxiety, sleep, or stress. You will then be asked a few questions and your results will returned based of a "+
+            "clinically used scale.";
+        reprompt = speechOutput;
+    }
+    else if(session.stage == 2){
+        speechOutput = "To answer the given statement, please say a number between zero and four. Your responses to these statements will be graded "+
+            "using an algorithim used by actual clinicians.";
+        reprompt = speechOutput;
+    } 
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleStop(intent, session, callback){
@@ -185,7 +215,9 @@ function handleStop(intent, session, callback){
     var endSession = true;
     var speechOutput = "Thank you for playing!";
     var reprompt = "";
-    delete(sessions[id]); 
+    //Probably don't want to delete on exit, make a new intent to handle deleteion of data. Reset skill stage instead.
+    //delete(sessions[id]); 
+    session.stage = 0;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
