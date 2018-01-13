@@ -80,7 +80,7 @@ function onIntent(intentRequest, session, callback) {
     // dispatch custom intents to handlers here
     if(session.state == 0){
         if(intentName == "AMAZON.HelpIntent"){
-            handleGetHelpRequest(intent, session, callback);
+            handleHelpRequest(intent, session, callback);
         }
         else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
             handleStop(intent, session, callback);
@@ -95,7 +95,7 @@ function onIntent(intentRequest, session, callback) {
     }
     else if(session.state == 1){
         if(intentName == "AMAZON.HelpIntent"){
-            handleGetHelpRequest(intent, session, callback);
+            handleHelpRequest(intent, session, callback);
         }
         else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
             handleStop(intent, session, callback);
@@ -112,7 +112,7 @@ function onIntent(intentRequest, session, callback) {
     }
     else if(session.state == 2){
         if(intentName == "AMAZON.HelpIntent"){
-            handleGetHelpRequest(intent, session, callback);
+            handleHelpRequest(intent, session, callback);
         }
         else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
             handleStop(intent, session, callback);
@@ -121,6 +121,7 @@ function onIntent(intentRequest, session, callback) {
             handleAnswer(intent, session, callback, forms.depression, forms.diagnosisDep);
         }
     }
+    console.log("stages skipped");
 }
 
 /**
