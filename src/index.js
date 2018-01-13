@@ -113,12 +113,15 @@ function onIntent(intentRequest, session, callback) {
         }
         else if (intentName == "anxietyIntent"){
             sessions[getSeassion()].scale = 1;
+            handleAnxiety(intent, session, callback);
         }
         else if (intentName == "sleepIntent"){
             sessions[getSeassion()].scale = 2;
+            handleSleep(intent, session, callback);
         }
         else if (intentName == "stressIntent"){
             sessions[getSeassion()].scale = 3;
+            handleStress(intent, session, callback);
         }
         else{
             handleErrorIntent(intent,session,callback);
@@ -134,16 +137,16 @@ function onIntent(intentRequest, session, callback) {
         }
         else if(intentName == "answerIntent"){
             if(scale = 0){
-                handleAnswer(intent, session, callback, forms.depression,forms.diagnosisisDep)
+                handleAnswer(intent, session, callback, forms.depression,forms.diagnosisDep)
             }
             else if (scale == 1){
-                
+                handleAnswer(intent, session, callback, forms.anxiety,forms.diagnosisAnx)
             }
             else if (scale == 2){
-                
+                handleAnswer(intent, session, callback, forms.sleep,forms.diagnosisSlp)
             }
             else if (scale == 3){
-                
+                handleAnswer(intent, session, callback, forms.stress,forms.diagnosisStr)
             }
         }
         else{
@@ -185,6 +188,48 @@ function handleDepression(intent, session, callback){
     var speechOutput = depression.intro + " " + depression.questions[0];
     console.log(speechOutput);
     var reprompt = depression.questions[0];
+    sessions[getSession()].state = 2;
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
+}
+
+function handleAnxiety(intent, session, callback){
+    var id = getSession(session.sessionId);
+    var header = "My Mind";
+    var endSession = false;
+    console.log("attempt to use form");
+    var anxiety = forms.anxiety;
+    console.log("opened form");
+    var speechOutput = anxiety.intro + " " + anxiety.questions[0];
+    console.log(speechOutput);
+    var reprompt = anxiety.questions[0];
+    sessions[getSession()].state = 2;
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
+}
+
+function handleStress(intent, session, callback){
+    var id = getSession(session.sessionId);
+    var header = "My Mind";
+    var endSession = false;
+    console.log("attempt to use form");
+    var stress = forms.stress;
+    console.log("opened form");
+    var speechOutput = stress.intro + " " + stress.questions[0];
+    console.log(speechOutput);
+    var reprompt = stress.questions[0];
+    sessions[getSession()].state = 2;
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
+}
+
+function handleSleep(intent, session, callback){
+    var id = getSession(session.sessionId);
+    var header = "My Mind";
+    var endSession = false;
+    console.log("attempt to use form");
+    var sleep = forms.sleep;
+    console.log("opened form");
+    var speechOutput = sleep.intro + " " + sleep.questions[0];
+    console.log(speechOutput);
+    var reprompt = sleep.questions[0];
     sessions[getSession()].state = 2;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
