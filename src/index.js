@@ -287,7 +287,7 @@ function handleHelpRequest(intent, session, callback, form) {
         reprompt = speechOutput;
     }
     else if(sessions[getSession()].state == 2){
-        speechOutput = form.help;
+        speechOutput = form.help + " " + form.questions[sessions[id].question];
         reprompt = speechOutput;
     } 
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
