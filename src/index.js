@@ -18,9 +18,8 @@ const getSession = (alexaid) => {
 // Route the incoming request based on type (LaunchRequest, IntentRequest,
 // etc.) The JSON body of the request is provided in the event parameter.
 exports.handler = function (event, context) {
-    console.log("recieved event");
     try {
-        console.log("event.session.application.applicationId=" + event.session.application.applicationId);
+        console.log("RECIEVED EVENT: event.session.application.applicationId=" + event.session.application.applicationId);
 
         /**
          * Uncomment this if statement and populate with your skill's application ID to
@@ -191,11 +190,8 @@ function handleDepression(intent, session, callback){
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
-    console.log("attempt to use form");
     var depression = forms.depression;
-    console.log("opened form");
     var speechOutput = depression.intro + " " + depression.questions[0];
-    console.log(speechOutput);
     var reprompt = depression.questions[0];
     sessions[getSession()].state = 2;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
@@ -205,11 +201,8 @@ function handleAnxiety(intent, session, callback){
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
-    console.log("attempt to use form");
     var anxiety = forms.anxiety;
-    console.log("opened form");
     var speechOutput = anxiety.intro + " " + anxiety.questions[0];
-    console.log(speechOutput);
     var reprompt = anxiety.questions[0];
     sessions[getSession()].state = 2;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
@@ -219,11 +212,8 @@ function handleStress(intent, session, callback){
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
-    console.log("attempt to use form");
     var stress = forms.stress;
-    console.log("opened form");
     var speechOutput = stress.intro + " " + stress.questions[0];
-    console.log(speechOutput);
     var reprompt = stress.questions[0];
     sessions[getSession()].state = 2;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
@@ -233,11 +223,8 @@ function handleSleep(intent, session, callback){
     var id = getSession(session.sessionId);
     var header = "My Mind";
     var endSession = false;
-    console.log("attempt to use form");
     var sleep = forms.sleep;
-    console.log("opened form");
     var speechOutput = sleep.intro + " " + sleep.questions[0];
-    console.log(speechOutput);
     var reprompt = sleep.questions[0];
     sessions[getSession()].state = 2;
     callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
