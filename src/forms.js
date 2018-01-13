@@ -47,24 +47,41 @@ function depression(){
 	}
 }
 function diagnosisDep(questions){
-	if(questions[7] == 4 && questions[9] == 4){
-		var countFour = 0;
-		var countThree = 0;
-		for(var i = 0; i < questions.length; i++){
-			if(i == 7 || i == 9){
-				continue;
-			}
-			if(questions[i] == 4){
-				countFour++;
-			}
-			else if(){
-			}
+	var total = 0;
+	var countFour = 0;
+	var countThree = 0;
+	for(var i = 0; i < questions.length; i++){
+		if(questions[i] == 4){
+			countFour++;
+		}
+		if(questions[i] == 3){
+			countThree++;
+		}
+		total += questions[i];
+	}
+	if((questions[7] == 4 && questions[9] == 4) || (questions[1] == 4 && questions[3] == 4 && questions[5] == 4)){
+		if(countFour >= 4){
+			return "majorDep";
+		}
+		else if(countFour + countThree >= 3){
+			return "ProbableMajorDepressiveEpisode";
+		}
+		else if(countFour + countThree >= 2){
+			return "PossibleMajorDepressiveEpisode";
+		}
+		else if(total > 16){
+			return "SubthreshholdDepressionSymptoms";
+		}
+		else{
+			return "NoClinicalSignificance";
 		}
 	}
-	else if(questions[1] == 4 && questions[3] == 4 && questions[5] == 4){
-		
-	}
 	else{
-	
+		if(total > 16){
+			return "SubthreshholdDepressionSymptoms";
+		}
+		else{
+			return "NoClinicalSignificance";
+		}
 	}
 }
