@@ -108,9 +108,9 @@ function getWelcomeResponse(callback) {
     var speechOutput = "Say yes.";
     var reprompt = "";
     var header = "My Mind";
-    var shouldEndSession = false;
+    var endSession = false;
     var sessionAttributes = {};
-    callback(sessionAttributes, buildSpeechletResponse(header, speechOutput, reprompt, shouldEndSession));
+    callback(sessionAttributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleYes(intent, session, callback){
@@ -123,7 +123,7 @@ function handleYes(intent, session, callback){
     var speechOutput = depression.intro + " " + depression.questions[0];
     console.log(speechOutput);
     var reprompt = depression.questions[0];
-    callback({}, buildSpeechletResponse(header, speechOutput, reprompt, shouldEndSession));
+    callback({}, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleAnswer(intent, session, callback, form, check){
@@ -149,7 +149,7 @@ function handleAnswer(intent, session, callback, form, check){
         speechOutput = "Please choose a number between " + form.min + " and " + form.max + ".";
         reprompt = form.questions[sessions[id].question];
     }
-    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, shouldEndSession));
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleHelpRequest(intent, session, callback) {
