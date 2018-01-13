@@ -123,7 +123,7 @@ function handleYes(intent, session, callback){
     var speechOutput = depression.intro + " " + depression.questions[0];
     console.log(speechOutput);
     var reprompt = depression.questions[0];
-    callback({}, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
+    callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleAnswer(intent, session, callback, form, check){
