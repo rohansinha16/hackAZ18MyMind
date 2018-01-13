@@ -86,7 +86,7 @@ exports.diagnosisDep = function(questions){
 
 exports.anxiety = {
 	min: 0,
-	max: 0,
+	max: 21,
 	intro: "",
 	outro: "",
 	help: "",
@@ -130,4 +130,19 @@ exports.sleep = {
 };
 
 exports.diagnosisSlp = function(questions){
+};
+exports.General = {
+	min: 0,
+	max: 0,
+	intro: "",
+	outro: "",
+	help: "",
+	goal: "",
+	questions: [
+		"question 1",
+		"question 2",
+	]
+};
+exports.diagnosisStr = function(questions){
+
 };
