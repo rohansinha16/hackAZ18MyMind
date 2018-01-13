@@ -145,17 +145,49 @@ exports.diagnosisAnx = function(questions){
 
 exports.stress = {
 	min: 0,
-	max: 0,
-	intro: "",
-	outro: "",
-	help: "",
-	goal: "",
+	max: 40,
+	intro: "In this Perceived Stress Scale, I will be asking you 10 questions on how" +
+		" often you may have felt or behaved over the past month or so. Please respond" +
+		" to these questions with a 0, 1, 2, 3, or 4; 0 meaning never and 4 being very" +
+		" often. Lets begin",
+	outro: "Your entry has been logged. This scale was built using the Perceived Stress Scale." +
+		" Please visit http://www.mindgarden.com for further information.",
+	help: "To answer these questions, please say a number between 0 and 4. 0 indicates never." +
+		" 1 indicates almost never. 2 indicates sometimes. 3 indicates fairly often." +
+		" And 4 indicts very often. Lets resume.",
+	goal: "lower",
+	LowStress: "Based on the scores you have provided; your possible percieved stress category shows low perceived stress.",
+ 	ModStress: "Based on the scores you have provided; your possible perceived stress category shows moderate perceived stress.",
+	HighStress: "Based on the scores you have provided; your possible perceived stress category shows high perceived stress.",
+
 	questions: [
-		"question 1",
-		"question 2",
+		" In the last month, how often have you been upset because of something that happened unexpectedly?",
+		" In the last month, how often have you felt that you were unable to control the important things in your life?",
+		" In the last month, how often have you felt nervous and “stressed”?",
+		" In the last month, how often have you felt confident about your ability to handle your personal problems? ",
+		" In the last month, how often have you felt that things were going your way?",
+		" In the last month, how often have you found that you could not cope with all the things that you had to do?",
+		" In the last month, how often have you been able to control irritations in your life?",
+		" In the last month, how often have you felt that you were on top of things?", 
+		" In the last month, how often have you been angered because of things that were outside of your control?",
+		" In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?",
 	]
 };
 exports.diagnosisStr = function(questions){
+	
+	var total = 0;
+	for(var i = 0; i < questions.length; i++){
+		total += questions[i];
+	}
+	if(total < 13){
+		return ["LowStress", total];
+	}
+	else if(total >= 14 && total < 26){
+		return ["ModStress", total];
+	}
+	else{
+		return ["HighStress", total];
+	}
 
 };
 
