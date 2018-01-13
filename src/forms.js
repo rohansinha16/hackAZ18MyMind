@@ -112,8 +112,6 @@ exports.anxiety = {
 		" Being so restless that it's hard to sit still",
 		" Becoming easily annoyed or irritable",
 		"  Feeling afraid as if something awful might happen ",
-		" ",
-		" ",
 	],
 	mquestions: [
 		"If you responded with any problems, how difficult have these made it for you to" +
