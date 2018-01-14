@@ -83,7 +83,7 @@ exports.diagnosisDep = function(questions){
 
 exports.anxiety = {
 	min: 0,
-	max: 21,
+	max: 3,
 	intro: "In this Generalized Anxiety Scale, I will be asking you 7 questions on how often" +
 		" you have been bothered by the following problems over the past two weeks or so. Please" +
 		" respond to these questions with a 0, 1, 2, or 3; 0 meaning not at all sure and 3 being" +
@@ -142,7 +142,7 @@ exports.diagnosisAnx = function(questions){
 
 exports.stress = {
 	min: 0,
-	max: 40,
+	max: 4,
 	intro: "In this Perceived Stress Scale, I will be asking you 10 questions on how" +
 		" often you may have felt or behaved over the past month or so. Please respond" +
 		" to these questions with a 0, 1, 2, 3, or 4; 0 meaning never and 4 being very" +
@@ -190,7 +190,7 @@ exports.diagnosisStr = function(questions){
 
 exports.General = {
 	min: 0,
-	max: 50,
+	max: 5,
 	intro: "In this Kessler Psychological Distress Scale, I will be asking you 10 questions" +
 		" on the ways you may have felt or behaved over the past month or so. Please" +
 		" respond to these questions with a 1, 2, 3, 4, or 5; 1 meaning none of the time" +
