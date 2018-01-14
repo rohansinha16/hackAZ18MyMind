@@ -92,13 +92,13 @@ exports.anxiety = {
 	intro: "In this Generalized Anxiety Scale, I will be asking you 7 questions on how often" +
 		" you have been bothered by the following problems over the past two weeks or so. Please" +
 		" respond to these questions with a 0, 1, 2, or 3; 0 meaning not at all sure and 3 being" +
-		" nearly every day. Lets begin",
+		" nearly every day. Lets begin, ",
 	outro: "Your entry has been logged. This scale was built using the Generalized Anxiety Disorder" +
 		" 7-item (GAD-7) scale. If you would like to do another, please say 'new entry' or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	help: "To answer these questions, please say a number between 0 and 3. 0 indicates not at all sure." +
 		" 1 indicates several days. 2 indicates over half the days. And 3 indicates nearly every day." +
-		" Lets resume.",
+		" Lets resume...",
 	checker: "diagnosisAnx",
 	MildAnxiety: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
 		" category is Mild Anxiety. If you would like to do another, please say 'new entry' or"+
@@ -115,13 +115,13 @@ exports.anxiety = {
 		" category shows no clinical significance. If you would like to do another, please say 'new entry' or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	questions: [
-		" Feeling nervous, anxious, or on edge",
-		" Not being able to stop or control worrying",
-		" Worrying too much about different things ",
-		" Trouble relaxing ",
-		" Being so restless that it's hard to sit still",
-		" Becoming easily annoyed or irritable",
-		"  Feeling afraid as if something awful might happen ",
+		" Feeling nervous, anxious, or on edge.",
+		" Not being able to stop or control worrying.",
+		" Worrying too much about different things.",
+		" Trouble relaxing.",
+		" Being so restless that it's hard to sit still.",
+		" Becoming easily annoyed or irritable.",
+		" Feeling afraid as if something awful might happen.",
 	],
 	mquestions: [
 		"If you responded with any problems, how difficult have these made it for you to" +
