@@ -223,7 +223,8 @@ function handleAnswer(intent, session, callback, form){
 			sessions[id].resultsDB[key2][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
 			sessions[id].resultsDB[key_Prev][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
 			console.log(sessions[id].resultsDB);
-			speechOutput = form[results[0]];
+			speechOutput = form[results[0]] + " If you would like to do another survey, please say 'new entry'. If you would"+
+				" like to check your scores, please say, 'check my scores'. Otherwise, say 'quit' to exit the skill.";
 			sessions[id].answers = [];
 			sessions[id].scale = "";
 			sessions[id].state = 0;
