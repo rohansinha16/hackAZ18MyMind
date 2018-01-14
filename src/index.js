@@ -115,7 +115,7 @@ function onIntent(intentRequest, session, callback) {
 			handleErrorIntent(intent,session,callback);
 		}
 		if(sessions[id].scale != ""){
-			handleIntro(intent, session, , callback, forms[sessions[id].scale]);
+			handleIntro(intent, session, callback, forms[sessions[id].scale]);
 		}
 	}
 	else if(state == 2){
@@ -152,7 +152,6 @@ function getWelcomeResponse(callback) {
 }
 
 function handleIntro(intent, session, callback, form){
-	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = false;
 	var speechOutput = form.intro + " " + form.questions[0];
@@ -176,6 +175,7 @@ function handleAnswer(intent, session, callback, form){
 			reprompt = speechOutput;
 		}
 		else{
+		    console.log("Getting dates");
 			var d = new Date();
 			var key = d.getMonth()+1;
 			if(key < 10){
@@ -183,18 +183,28 @@ function handleAnswer(intent, session, callback, form){
 			}
 			key = d.getFullYear() + "-" + key + "-";
 			if(d.getDate() < 10){
-				key += "0"
+				key += "0";
 			}
 			key += d.getDate();
 			var key2 = d.getFullYear() + "-W" + d.getWeek();
 			var results = forms[form.checker](sessions[id].answers);
+			console.log(key + " " + key2 + " " + results);
+			if(!(key in sessions[id].resultsDB)){
+			    sessions[id].resultsDB[key] = {};
+			}
+			if(!(key2 in sessions[id].resultsDB)){
+			    sessions[id].resultsDB[key2] = {};
+			}
 			sessions[id].resultsDB[key][sessions[id].scale] = {
-				answers: sessions[id].answers,
-				total: results[1],
-				result: results[0]
+				"answers": sessions[id].answers,
+				"total": results[1],
+				"result": results[0]
 			};
+			
 			sessions[id].resultsDB[key2][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
+			console.log(JSON.stringify(sessions[id].resultsDB));
 			speechOutput = form[results[0]];
+			console.log("set speechOutput");
 			sessions[id].answers = [];
 			sessions[id].scale = "";
 			reprompt = "";
@@ -225,7 +235,7 @@ function handleHelpRequest(intent, session, callback) {
 		reprompt = speechOutput;
 	}
 	else if(sessions[getSession()].state == 2){
-		var form = forms.[sessions[id].scale];
+		var form = forms[sessions[id].scale];
 		speechOutput = form.help + " " + form.questions[sessions[id].question];
 		reprompt = speechOutput;
 	} 
