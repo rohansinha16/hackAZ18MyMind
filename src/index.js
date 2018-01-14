@@ -227,6 +227,7 @@ function handleAnswer(intent, session, callback, form){
 			sessions[id].answers = [];
 			sessions[id].scale = "";
 			sessions[id].state = 0;
+			sessions[id].question = 0;
 			reprompt = "";
 		}
 	}
