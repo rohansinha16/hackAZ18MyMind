@@ -60,10 +60,8 @@ exports.handler = function (event, context) {
  */
 function onSessionStarted(sessionStartedRequest, session) {
 	// add any session init logic here
-	sessions[session.sessionId];
+	sessions[session.sessionId].state = 0;
 	// if the skill restarts set the session to 0
-	// can possibly handle this differently
-	sessions[getSession()].state = 0;
 }
 
 /**
@@ -79,8 +77,8 @@ function onLaunch(launchRequest, session, callback) {
 function onIntent(intentRequest, session, callback) {
 	var intent = intentRequest.intent;
 	var intentName = intentRequest.intent.name;
-	var state = sessions[getSession()].state;
 	var id = getSession(session.sessionId);
+	var state = sessions[id].state;
 	console.log(sessions[id].state);
 	// dispatch custom intents to handlers here
 	if(intentName == "AMAZON.HelpIntent"){
@@ -91,7 +89,7 @@ function onIntent(intentRequest, session, callback) {
 	}
 	else if(state == 0){
 		if(intentName == "newEntryIntent"){
-			sessions[getSession()].state = 1;
+			sessions[id].state = 1;
 			handleEntry(intent, session, callback);
 		}
 		else{
@@ -152,11 +150,12 @@ function getWelcomeResponse(callback) {
 }
 
 function handleIntro(intent, session, callback, form){
+	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = false;
 	var speechOutput = form.intro + " " + form.questions[0];
 	var reprompt = form.questions[0];
-	sessions[getSession()].state = 2;
+	sessions[id].state = 2;
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
@@ -192,7 +191,6 @@ function handleAnswer(intent, session, callback, form){
 			}
 			var key2 = d.getFullYear() + "-W" + key2;
 			var results = forms[form.checker](sessions[id].answers);
-			console.log(key + " " + key2 + " " + results);
 			if(!(key in sessions[id].resultsDB)){
 			    sessions[id].resultsDB[key] = {};
 			}
@@ -204,11 +202,8 @@ function handleAnswer(intent, session, callback, form){
 				"total": results[1],
 				"result": results[0]
 			};
-			
 			sessions[id].resultsDB[key2][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
-			console.log(JSON.stringify(sessions[id].resultsDB));
 			speechOutput = form[results[0]];
-			console.log("set speechOutput");
 			sessions[id].answers = [];
 			sessions[id].scale = "";
 			sessions[id].state = 0;
@@ -228,18 +223,18 @@ function handleHelpRequest(intent, session, callback) {
 	var endSession = false;
 	var speechOutput = "";
 	var reprompt = "";
-	if(sessions[getSession()].state == 0){
+	if(sessions[id].state == 0){
 		speechOutput = "To create a new entry and help track your mental health go ahead and say, 'new entry'. Or if you would like "+
 			"to quit, go ahead and say 'quit'.";
 		reprompt = speechOutput;
 	}
-	else if(sessions[getSession()].state == 1){
+	else if(sessions[id].state == 1){
 		speechOutput = "To select which mental health entry you would like to make go ahead and say one of the following, "+
 			"depression, anxiety, sleep, or stress. You will then be given a set of statements to rate and your results will be returned based off "+
 			"of a clinically used scale.";
 		reprompt = speechOutput;
 	}
-	else if(sessions[getSession()].state == 2){
+	else if(sessions[id].state == 2){
 		var form = forms[sessions[id].scale];
 		speechOutput = form.help + " " + form.questions[sessions[id].question];
 		reprompt = speechOutput;
@@ -255,7 +250,7 @@ function handleStop(intent, session, callback){
 	var reprompt = "";
 	//Probably don't want to delete on exit, make a new intent to handle deleteion of data. Reset skill stage instead.
 	//delete(sessions[id]); 
-	sessions[getSession()].state = 0;
+	sessions[id].state = 0;
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
