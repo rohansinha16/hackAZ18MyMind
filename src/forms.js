@@ -15,13 +15,13 @@ exports.depression = {
 	checker: "diagnosisDep",
 	majorDep: "Based on the scores you have provided; your possible depressive symptom category is Major Depressive Episode. If you would like to do another, please say 'new entry' or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
-	ProbableMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Probable Major Depressive Episode. If you would like to do another, please say 'new entry' or"+
+	ProbableMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Probable Major Depressive Episode. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
-	PossibleMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Possible major depressive episode. If you would like to do another, please say 'new entry' or"+
+	PossibleMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Possible major depressive episode. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
-	SubthreshholdDepressionSymptoms: "Based on the scores you have provided; your possible depressive symptom category is Subthreshhold depression symptoms. If you would like to do another, please say 'new entry' or"+
+	SubthreshholdDepressionSymptoms: "Based on the scores you have provided; your possible depressive symptom category is Subthreshhold depression symptoms. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
-	NoClinicalSignificance: "Based on the scores you have provided; your possible depressive symptom category shows no clinical significance. If you would like to do another, please say 'new entry' or"+
+	NoClinicalSignificance: "Based on the scores you have provided; your possible depressive symptom category shows no clinical significance. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	questions: [ 
 		"My appetite was poor.",
@@ -101,18 +101,18 @@ exports.anxiety = {
 		" Lets resume...",
 	checker: "diagnosisAnx",
 	MildAnxiety: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
-		" category is Mild Anxiety. If you would like to do another, please say 'new entry' or"+
+		" category is Mild Anxiety. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	ModAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
 		" GAD; your possible Generalized Anxiety Disorder category is Moderate Anxiety. confirm" +
-		" by future evaluation. If you would like to do another, please say 'new entry' or"+
+		" by future evaluation. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	SeverAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
 		" GAD; your possible Generalized Anxiety Disorder category is Sever Anxiety. confirm by" +
-		" future evaluation. If you would like to do another, please say 'new entry' or"+
+		" future evaluation. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	NoSig: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
-		" category shows no clinical significance. If you would like to do another, please say 'new entry' or"+
+		" category shows no clinical significance. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	questions: [
 		" Feeling nervous, anxious, or on edge.",
@@ -164,11 +164,11 @@ exports.stress = {
 		" 1 indicates almost never. 2 indicates sometimes. 3 indicates fairly often." +
 		" And 4 indicts very often. Lets resume.",
 	checker: "diagnosisStr",
-	LowStress: "Based on the scores you have provided; your possible percieved stress category shows low perceived stress. If you would like to do another, please say 'new entry' or"+
+	LowStress: "Based on the scores you have provided; your possible percieved stress category shows low perceived stress. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
- 	ModStress: "Based on the scores you have provided; your possible perceived stress category shows moderate perceived stress. If you would like to do another, please say 'new entry' or"+
+ 	ModStress: "Based on the scores you have provided; your possible perceived stress category shows moderate perceived stress. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
-	HighStress: "Based on the scores you have provided; your possible perceived stress category shows high perceived stress. If you would like to do another, please say 'new entry' or"+
+	HighStress: "Based on the scores you have provided; your possible perceived stress category shows high perceived stress. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 
 	questions: [
@@ -216,13 +216,13 @@ exports.general = {
 	help: "To answer these questions, please say a number between 1 and 5. 1 indicates none of" +
 		" the time. 2 indicates a little of the time. 3 indicates some of the time. 4" +
 		" indicates most of the time. And 5 indicates all of the time. Lets resume.",
-	LikelyWell: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to be well. If you would like to do another, please say 'new entry' or"+
+	LikelyWell: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to be well. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
-	LikelyMild: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a mild mental disorder. If you would like to do another, please say 'new entry' or"+
+	LikelyMild: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a mild mental disorder. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
-	LikelyMod: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have moderate mental disorder. If you would like to do another, please say 'new entry' or"+
+	LikelyMod: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have moderate mental disorder. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
-	LikelySever: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a severe mental disorder. If you would like to do another, please say 'new entry' or"+
+	LikelySever: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a severe mental disorder. If you would like to do another, please say 'new entry', or"+
 		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	questions: [
 		" During the last 30 days, about how often did you feel tired for no good reason?",
