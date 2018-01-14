@@ -272,7 +272,6 @@ function handleDate(intent, session, callback){
 	// get suggested year
 	var year = parseInt(key.substr(0, 4));
 	var d = new Date();
-	d = d.toLocaleDateString();
 	// make sure year is on or before curren year
 	while(year > d.getFullYear()){
 		year--;
