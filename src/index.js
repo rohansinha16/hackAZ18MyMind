@@ -317,7 +317,7 @@ function handleStop(intent, session, callback){
 	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = true;
-	var speechOutput = "Thank you for playing!";
+	var speechOutput = "Have a nice day!";
 	var reprompt = "";
 	sessions[id].state = 0;
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
