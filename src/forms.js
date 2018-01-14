@@ -195,6 +195,7 @@ exports.general = {
 		" on the ways you may have felt or behaved over the past month or so. Please" +
 		" respond to these questions with a 1, 2, 3, 4, or 5; 1 meaning never" +
 		" and 5 being all of the time. Lets begin.",
+	checker: "diagnosisGen",
 	outro: "Your entry has been logged. This scale was built using the Kessler Psychological" +
 		" Distress Scale (K10) from Kessler R. Professor of Health Care Policy, Harvard" +
 		" Medical School, Boston, USA. Please visit http://www.statisticssolutions.com/kessler-psychological-distress-scale-k10 for further information",
