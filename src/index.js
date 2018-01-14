@@ -130,7 +130,7 @@ function onIntent(intentRequest, session, callback) {
 	}
 	else if(state == 3){
 		if(intentName == "dateIntent"){
-			handleDate(intent, session, callbacky );
+			handleDate(intent, session, callback);
 		}
 		else{
 			handleErrorIntent(intent,session,callback);
