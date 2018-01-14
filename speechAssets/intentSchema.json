@@ -43,6 +43,42 @@
         ]
       },
       {
+        "name": "anxietyIntent",
+        "samples": [
+          "anxiety",
+          "anxiety log",
+          "track anxiety",
+          "lets do an anxiety log"
+        ],
+        "slots": []
+      },
+      {
+        "name": "checkScoreIntent",
+        "samples": [
+          "check score",
+          "check scores",
+          "what are my scores",
+          "score",
+          "scores"
+        ],
+        "slots": []
+      },
+      {
+        "name": "dateIntent",
+        "samples": [
+          "{date}",
+          "Get results from {date}",
+          "get score on {date}",
+          "{date} result"
+        ],
+        "slots": [
+          {
+            "name": "date",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      },
+      {
         "name": "depressionIntent",
         "samples": [
           "depression",
@@ -53,12 +89,40 @@
         "slots": []
       },
       {
+        "name": "errorIntent",
+        "samples": [
+          "random intent",
+          "for errors",
+          "don't",
+          "worry",
+          "about it",
+          "it really does nothing",
+          "except fit the longest",
+          "intent ten nine",
+          "eight",
+          "seven six",
+          "five four"
+        ],
+        "slots": []
+      },
+      {
         "name": "newEntryIntent",
         "samples": [
           "new entry",
           "new log",
           "new survey",
-          "log"
+          "log",
+          "entry"
+        ],
+        "slots": []
+      },
+      {
+        "name": "stressIntent",
+        "samples": [
+          "stress",
+          "lets do a stress log",
+          "track stress",
+          "stress log"
         ],
         "slots": []
       }
