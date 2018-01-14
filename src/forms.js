@@ -188,7 +188,7 @@ exports.diagnosisStr = function(questions){
 
 };
 
-exports.General = {
+exports.general = {
 	min: 0,
 	max: 5,
 	intro: "In this Kessler Psychological Distress Scale, I will be asking you 10 questions" +
