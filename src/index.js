@@ -303,7 +303,7 @@ function handleDate(intent, session, callback){
 	}
 	// no entry for date
 	else{
-		speechOutput = "Sorry, I have no records for that time.";
+		speechOutput = "Sorry, I have no records for that time. ";
 	}
 	// set program to begining
 	sessions[id].state = 0;
