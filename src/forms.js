@@ -193,7 +193,7 @@ exports.general = {
 	max: 5,
 	intro: "In this Kessler Psychological Distress Scale, I will be asking you 10 questions" +
 		" on the ways you may have felt or behaved over the past month or so. Please" +
-		" respond to these questions with a 1, 2, 3, 4, or 5; 1 meaning none of the time" +
+		" respond to these questions with a 1, 2, 3, 4, or 5; 1 meaning never" +
 		" and 5 being all of the time. Lets begin.",
 	outro: "Your entry has been logged. This scale was built using the Kessler Psychological" +
 		" Distress Scale (K10) from Kessler R. Professor of Health Care Policy, Harvard" +
@@ -206,7 +206,7 @@ exports.general = {
 	LikelyMod: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have moderate mental disorder",
 	LikelySever: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a severe mental disorder",
 	questions: [
-		" During the last 30 days, about how often did you feel tired out for no good reason?",
+		" During the last 30 days, about how often did you feel tired for no good reason?",
 		" During the last 30 days, about how often did you feel nervous?",
 		" During the last 30 days, about how often did you feel so nervous that nothing could calm you down?",
 		" During the last 30 days, about how often did you feel hopeless?",
