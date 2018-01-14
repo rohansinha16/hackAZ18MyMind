@@ -13,32 +13,37 @@ exports.depression = {
 		" 2 indicates 3 to 4 days. 3 indicates 5 to 7 days. And 4 indicates nearly" +
 		" everyday for 2 weeks. Lets resume. ",
 	checker: "diagnosisDep",
-	majorDep: "Based on the scores you have provided; your possible depressive symptom category is Major Depressive Episode.",
-	ProbableMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Probable Major Depressive Episode.",
-	PossibleMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Possible major depressive episode.",
-	SubthreshholdDepressionSymptoms: "Based on the scores you have provided; your possible depressive symptom category is Subthreshhold depression symptoms.",
-	NoClinicalSignificance: "Based on the scores you have provided; your possible depressive symptom category shows no clinical significance.",
+	majorDep: "Based on the scores you have provided; your possible depressive symptom category is Major Depressive Episode. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+	ProbableMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Probable Major Depressive Episode. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+	PossibleMajorDepressiveEpisode: "Based on the scores you have provided; your possible depressive symptom category is Possible major depressive episode. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+	SubthreshholdDepressionSymptoms: "Based on the scores you have provided; your possible depressive symptom category is Subthreshhold depression symptoms. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+	NoClinicalSignificance: "Based on the scores you have provided; your possible depressive symptom category shows no clinical significance. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	questions: [ 
-		"My appetite was poor",
-		"I could not shake off the blues",
-		"I had trouble keeping my mind on what I was doing",
-		"I felt depressed",
+		"My appetite was poor.",
+		"I could not shake off the blues.",
+		"I had trouble keeping my mind on what I was doing.",
+		"I felt depressed.",
 		"My sleep was restless",
-		"I felt sad",
-		"I could not get going",
-		"Nothing made me happy",
-		"I felt like a bad person",
-		"I lost interest in my usual activities",
-		"I slept much more than usual",
-		"I felt like I was moving too slowly",
-		"I felt fidgety",
-		"I wished I were dead",
-		"I wanted to hurt myself",
-		"I was tired all the time",
-		"I did not like myself",
-		"I lost a lot of weight without trying to",
-		"I had a lot of trouble getting to sleep",
-		"I could not focus on the important things",
+		"I felt sad.",
+		"I could not get going.",
+		"Nothing made me happy.",
+		"I felt like a bad person.",
+		"I lost interest in my usual activities.",
+		"I slept much more than usual.",
+		"I felt like I was moving too slowly.",
+		"I felt fidgety.",
+		"I wished I were dead.",
+		"I wanted to hurt myself.",
+		"I was tired all the time.",
+		"I did not like myself.",
+		"I lost a lot of weight without trying to.",
+		"I had a lot of trouble getting to sleep.",
+		"I could not focus on the important things.",
 	]
 	
 };
@@ -96,15 +101,19 @@ exports.anxiety = {
 		" Lets resume.",
 	checker: "diagnosisAnx",
 	MildAnxiety: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
-		" category is Mild Anxiety",
+		" category is Mild Anxiety. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	ModAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
 		" GAD; your possible Generalized Anxiety Disorder category is Moderate Anxiety. confirm" +
-		" by future evaluation.",
+		" by future evaluation. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	SeverAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
 		" GAD; your possible Generalized Anxiety Disorder category is Sever Anxiety. confirm by" +
-		" future evaluation",
+		" future evaluation. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	NoSig: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
-		" category shows no clinical significance",
+		" category shows no clinical significance. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	questions: [
 		" Feeling nervous, anxious, or on edge",
 		" Not being able to stop or control worrying",
@@ -118,7 +127,7 @@ exports.anxiety = {
 		"If you responded with any problems, how difficult have these made it for you to" +
 		" do your work, takecare of things at home, or get along with other people?" +
 		" Respond with no or between 0 and 3. 0 being not at all difficult. 1 being somewhat difficult. 2 being very" +
-		" difficult. 3 being extremely difficult. And No, for does not apply.",
+		" difficult. 3 being extremely difficult.",
 	]
 };
 
@@ -155,9 +164,12 @@ exports.stress = {
 		" 1 indicates almost never. 2 indicates sometimes. 3 indicates fairly often." +
 		" And 4 indicts very often. Lets resume.",
 	checker: "diagnosisStr",
-	LowStress: "Based on the scores you have provided; your possible percieved stress category shows low perceived stress.",
- 	ModStress: "Based on the scores you have provided; your possible perceived stress category shows moderate perceived stress.",
-	HighStress: "Based on the scores you have provided; your possible perceived stress category shows high perceived stress.",
+	LowStress: "Based on the scores you have provided; your possible percieved stress category shows low perceived stress. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+ 	ModStress: "Based on the scores you have provided; your possible perceived stress category shows moderate perceived stress. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+	HighStress: "Based on the scores you have provided; your possible perceived stress category shows high perceived stress. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 
 	questions: [
 		" In the last month, how often have you been upset because of something that happened unexpectedly?",
@@ -204,10 +216,14 @@ exports.general = {
 	help: "To answer these questions, please say a number between 1 and 5. 1 indicates none of" +
 		" the time. 2 indicates a little of the time. 3 indicates some of the time. 4" +
 		" indicates most of the time. And 5 indicates all of the time. Lets resume.",
-	LikelyWell: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to be well",
-	LikelyMild: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a mild mental disorder",
-	LikelyMod: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have moderate mental disorder",
-	LikelySever: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a severe mental disorder",
+	LikelyWell: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to be well. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+	LikelyMild: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a mild mental disorder. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+	LikelyMod: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have moderate mental disorder. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
+	LikelySever: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a severe mental disorder. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	questions: [
 		" During the last 30 days, about how often did you feel tired for no good reason?",
 		" During the last 30 days, about how often did you feel nervous?",
