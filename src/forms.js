@@ -179,7 +179,7 @@ exports.stress = {
 		" In the last month, how often have you felt that things were not going your way?",
 		" In the last month, how often have you found that you could not cope with all the things that you had to do?",
 		" In the last month, how often have you been unable to control irritations in your life?",
-		" In the last month, how often have you felt that you that you could not stay on top of things?", 
+		" In the last month, how often have you felt that you could not stay on top of things?", 
 		" In the last month, how often have you been angered because of things that were outside of your control?",
 		" In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?",
 	]
