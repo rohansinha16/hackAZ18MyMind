@@ -146,7 +146,7 @@ exports.stress = {
 		" often you may have felt or behaved over the past month or so. Please respond" +
 		" to these questions with a 0, 1, 2, 3, or 4; 0 meaning never and 4 being very" +
 		" often. Lets begin",
-	outro: "Your entry has been logged. This scale was built using the Perceived Stress Scale."
+	outro: "Your entry has been logged. This scale was built using the Perceived Stress Scale.",
 	help: "To answer these questions, please say a number between 0 and 4. 0 indicates never." +
 		" 1 indicates almost never. 2 indicates sometimes. 3 indicates fairly often." +
 		" And 4 indicates very often. Lets resume.",
