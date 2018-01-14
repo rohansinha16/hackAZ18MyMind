@@ -109,6 +109,9 @@ function onIntent(intentRequest, session, callback) {
 		else if (intentName == "stressIntent"){
 			sessions[id].scale = "stress";
 		}
+		else if (intentName == "generalIntent"){
+			sessions[id].scale = "general";
+		}
 		else{
 			handleErrorIntent(intent,session,callback);
 		}
