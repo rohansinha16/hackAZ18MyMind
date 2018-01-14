@@ -279,7 +279,7 @@ function handleDate(intent, session, callback){
 	// add corrected year
 	key = year + key.substr(4);
 	// check if there is entry for date
-	if(key in sessions[id].resultsDB)){
+	if(key in sessions[id].resultsDB){
 		var data = sessions[id].resultsDB[key];
 		var entry;
 		// go through completed forms from the time
