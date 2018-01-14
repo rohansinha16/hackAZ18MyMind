@@ -186,7 +186,11 @@ function handleAnswer(intent, session, callback, form){
 				key += "0";
 			}
 			key += d.getDate();
-			var key2 = d.getFullYear() + "-W" + d.getWeek();
+			var key2 = d.getWeek();
+			if(key2 < 10){
+			    key2 = "0" + key2;
+			}
+			var key2 = d.getFullYear() + "-W" + key2;
 			var results = forms[form.checker](sessions[id].answers);
 			console.log(key + " " + key2 + " " + results);
 			if(!(key in sessions[id].resultsDB)){
@@ -207,6 +211,7 @@ function handleAnswer(intent, session, callback, form){
 			console.log("set speechOutput");
 			sessions[id].answers = [];
 			sessions[id].scale = "";
+			sessions[id].state = 0;
 			reprompt = "";
 		}
 	}
