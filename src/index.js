@@ -130,7 +130,7 @@ function onIntent(intentRequest, session, callback) {
 	}
 	else if(state == 3){
 		if(intentName == "dateIntent"){
-			handleDate(intent, session, callback);
+			handleDate(intent, session, callback );
 		}
 		else{
 			handleErrorIntent(intent,session,callback);
@@ -186,8 +186,8 @@ function handleAnswer(intent, session, callback, form){
 			reprompt = speechOutput;
 		}
 		else{
-		    console.log("Getting dates");
 			var d = new Date();
+			d = d.toLocaleDateString();
 			var key = d.getMonth()+1;
 			if(key < 10){
 				key = "0" + key;
@@ -215,6 +215,7 @@ function handleAnswer(intent, session, callback, form){
 				"result": results[0]
 			};
 			sessions[id].resultsDB[key2][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
+			console.log(sessions[id].resultsDB);
 			speechOutput = form[results[0]];
 			sessions[id].answers = [];
 			sessions[id].scale = "";
@@ -264,20 +265,25 @@ function handleDate(intent, session, callback){
 	// get suggested year
 	var year = parseInt(key.substr(0, 4));
 	var d = new Date();
+	d = d.toLocaleDateString();
 	// make sure year is on or before curren year
 	while(year > d.getFullYear()){
 		year--;
 	}
 	// if in future subtract year by 1 for week format
-	if(key.substr(5, 1) == "W" && parseInt(key.substr(6, 2)) > d.getWeek()){
+	if(year == d.getFullYear() && key.substr(5, 1) == "W" && parseInt(key.substr(6, 2)) > d.getWeek()){
+		console.log("week");
 		year--;
 	}
 	// for day month format
-	else if(parseInt(key.substr(5, 2)) > d.getMonth()){
+	else if(year == d.getFullYear() && parseInt(key.substr(5, 2)) > (d.getMonth() + 1)){
+		console.log("day");
 		year--;
 	}
+	console.log(year);
 	// add corrected year
 	key = year + key.substr(4);
+	console.log(key);
 	// check if there is entry for date
 	if(key in sessions[id].resultsDB){
 		var data = sessions[id].resultsDB[key];
@@ -296,6 +302,7 @@ function handleDate(intent, session, callback){
 	sessions[id].state = 0;
 	var reprompt = "If you would like to make a new entry please say 'new entry'. If you would like to check you scores please say 'check my scores'.";
 	speechOutput += reprompt;
+	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleStop(intent, session, callback){
