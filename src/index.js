@@ -297,7 +297,7 @@ function handleDate(intent, session, callback){
 		var data = sessions[id].resultsDB[key];
 		var entry;
 		// go through completed forms from the time
-	    for(var i = 0; i < Object.keys(data).length; i++){
+	 for(var i = 0; i < Object.keys(data).length; i++){
 	    	entry = data[Object.keys(data)[i]];
 	    	speechOutput += "For the " + Object.keys(data)[i] + " test, you recieved a result of " + entry.total + ". " + entry.result + " ";
 	    }
