@@ -91,6 +91,11 @@ function onIntent(intentRequest, session, callback) {
 			sessions[id].state = 1;
 			handleEntry(intent, session, callback);
 		}
+		else if(intentName == "checkScoreIntent"){
+			sessions[id].state = 3;
+			var speechOutput = "When do you want to see your entries from?";
+			callback(session.attributes, buildSpeechletResponse("My Mind", speechOutput, "", false));
+		}
 		else{
 			handleErrorIntent(intent,session,callback);
 		}
@@ -123,6 +128,14 @@ function onIntent(intentRequest, session, callback) {
 			handleErrorIntent(intent,session,callback);
 		}
 	}
+	else if(state == 3){
+		if(intentName == "dateIntent"){
+			handleDate(intent, session, callbacky );
+		}
+		else{
+			handleErrorIntent(intent,session,callback);
+		}
+	}
 	else{
 		handleErrorIntent(intent,session,callback);
 	}
@@ -140,7 +153,7 @@ function onSessionEnded(sessionEndedRequest, session) {
 
 function getWelcomeResponse(callback) {
 	var speechOutput = "Welcome to the My Mind Skill. If you would like to make a new entry please say 'new entry'. If you would"+
-		" like to check you average scores please say 'check my scores'.";
+		" like to check you scores please say 'check my scores'.";
 	var reprompt = "";
 	var header = "My Mind";
 	var endSession = false;
@@ -241,14 +254,56 @@ function handleHelpRequest(intent, session, callback) {
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
+function handleDate(intent, session, callback){
+	var id = getSession(session.sessionId);
+	var header = "My Mind";
+	var endSession = false;
+	var speechOutput = "Here are the results from that time: ";
+	// get date slot
+	var key = intent.slots.date.value;
+	// get suggested year
+	var year = parseInt(key.substr(0, 4));
+	var d = new Date();
+	// make sure year is on or before curren year
+	while(year > d.getFullYear()){
+		year--;
+	}
+	// if in future subtract year by 1 for week format
+	if(key.substr(5, 1) == "W" && parseInt(key.substr(6, 2)) > d.getWeek()){
+		year--;
+	}
+	// for day month format
+	else if(parseInt(key.substr(5, 2)) > d.getMonth()){
+		year--;
+	}
+	// add corrected year
+	key = year + key.substr(4);
+	// check if there is entry for date
+	if(key in sessions[id].resultsDB)){
+		var data = sessions[id].resultsDB[key];
+		var entry;
+		// go through completed forms from the time
+	    for(var i = 0; i < Object.keys(data).length; i++){
+	    	entry = data[Object.keys(data)[i]];
+	    	speechOutput += "For the " + Object.keys(data)[i] + " test, you recieved a result of " + entry.total + ". " + entry.result + " ";
+	    }
+	}
+	// no entry for date
+	else{
+		speechOutput = "Sorry, I have no records for that time.";
+	}
+	// set program to begining
+	sessions[id].state = 0;
+	var reprompt = "If you would like to make a new entry please say 'new entry'. If you would like to check you scores please say 'check my scores'.";
+	speechOutput += reprompt;
+}
+
 function handleStop(intent, session, callback){
 	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = true;
 	var speechOutput = "Thank you for playing!";
 	var reprompt = "";
-	//Probably don't want to delete on exit, make a new intent to handle deleteion of data. Reset skill stage instead.
-	//delete(sessions[id]); 
 	sessions[id].state = 0;
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
