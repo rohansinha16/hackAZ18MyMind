@@ -297,7 +297,7 @@ function handleDate(intent, session, callback){
 		// go through completed forms from the time
 	    for(var i = 0; i < Object.keys(data).length; i++){
 	    	entry = data[Object.keys(data)[i]];
-	    	speechOutput += "For the " + Object.keys(data)[i] + " test, you recieved a result of " + entry.total + ". " + entry.result + " ";
+	    	speechOutput += "For the " + Object.keys(data)[i] + " test, you recieved a result of " + entry.total + ". " + forms[Object.keys(data)[i]].entry.result + " ";
 	    }
 	}
 	// no entry for date
