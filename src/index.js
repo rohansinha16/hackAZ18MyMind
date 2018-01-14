@@ -106,9 +106,6 @@ function onIntent(intentRequest, session, callback) {
 		else if (intentName == "anxietyIntent"){
 			sessions[id].scale = "anxiety";
 		}
-		else if (intentName == "sleepIntent"){
-			sessions[id].scale = "sleep";
-		}
 		else if (intentName == "stressIntent"){
 			sessions[id].scale = "stress";
 		}
@@ -251,7 +248,7 @@ function handleHelpRequest(intent, session, callback) {
 	}
 	else if(sessions[id].state == 1){
 		speechOutput = "To select which mental health entry you would like to make go ahead and say one of the following, "+
-			"depression, anxiety, sleep, or stress. You will then be given a set of statements to rate and your results will be returned based off "+
+			"depression, anxiety, stress, or general. You will then be given a set of statements to rate and your results will be returned based off "+
 			"of a clinically used scale.";
 		reprompt = speechOutput;
 	}
@@ -326,7 +323,7 @@ function handleEntry(intent, session, callback){
 	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = false;
-	var speechOutput = " Which entry would you like to make today? You can do depression, anxiety, sleep, or stress.";
+	var speechOutput = " Which entry would you like to make today? You can do depression, anxiety, stress, or general.";
 	var reprompt = "Please say the name of the entry you would like to create.";
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
