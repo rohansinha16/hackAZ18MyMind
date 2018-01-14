@@ -6,8 +6,8 @@ exports.depression = {
 		" respond to these questions with a 0, 1, 2, 3, or 4; 0 meaning not at all or" +
 		" less than 1 day and 4 being nearly every day for 2 weeks. Lets begin.",
 	outrto: "Your entry has been logged. This scale was built using" +
-		" the Center for Epidemiologic Studies Depression Scale – Revised (CESD-R)." +
-		" Please visit http://cesd-r.com/ for more information.",
+		" the Center for Epidemiologic Studies Depression Scale. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	help: "To answer these questions, please say a number between 0 and 4." +
 		" 0 indicates not at all or less than 1 day. 1 indicates 1 to 2 days." +
 		" 2 indicates 3 to 4 days. 3 indicates 5 to 7 days. And 4 indicates nearly" +
@@ -89,7 +89,8 @@ exports.anxiety = {
 		" respond to these questions with a 0, 1, 2, or 3; 0 meaning not at all sure and 3 being" +
 		" nearly every day. Lets begin",
 	outro: "Your entry has been logged. This scale was built using the Generalized Anxiety Disorder" +
-		" 7-item (GAD-7) scale. Please visit http://www.phqscreeners.com",
+		" 7-item (GAD-7) scale. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	help: "To answer these questions, please say a number between 0 and 3. 0 indicates not at all sure." +
 		" 1 indicates several days. 2 indicates over half the days. And 3 indicates nearly every day." +
 		" Lets resume.",
@@ -148,7 +149,8 @@ exports.stress = {
 		" to these questions with a 0, 1, 2, 3, or 4; 0 meaning never and 4 being very" +
 		" often. Lets begin",
 	outro: "Your entry has been logged. This scale was built using the Perceived Stress Scale." +
-		" Please visit http://www.mindgarden.com for further information.",
+		" If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	help: "To answer these questions, please say a number between 0 and 4. 0 indicates never." +
 		" 1 indicates almost never. 2 indicates sometimes. 3 indicates fairly often." +
 		" And 4 indicts very often. Lets resume.",
@@ -197,8 +199,8 @@ exports.general = {
 		" and 5 being all of the time. Lets begin.",
 	checker: "diagnosisGen",
 	outro: "Your entry has been logged. This scale was built using the Kessler Psychological" +
-		" Distress Scale (K10) from Kessler R. Professor of Health Care Policy, Harvard" +
-		" Medical School, Boston, USA. Please visit http://www.statisticssolutions.com/kessler-psychological-distress-scale-k10 for further information",
+		" Distress Scale. If you would like to do another, please say 'new entry' or"+
+		" you can check you scores by saying, 'check score'. Otherwise you can exit by saying quit.",
 	help: "To answer these questions, please say a number between 1 and 5. 1 indicates none of" +
 		" the time. 2 indicates a little of the time. 3 indicates some of the time. 4" +
 		" indicates most of the time. And 5 indicates all of the time. Lets resume.",
