@@ -60,7 +60,6 @@ exports.handler = function (event, context) {
  */
 function onSessionStarted(sessionStartedRequest, session) {
 	// add any session init logic here
-	sessions[session.sessionId].state = 0;
 	// if the skill restarts set the session to 0
 }
 
