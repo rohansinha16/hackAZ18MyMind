@@ -21,7 +21,6 @@ const getSession = (alexaid) => {
 exports.handler = function (event, context) {
 	try {
 		console.log("RECIEVED EVENT: event.session.application.applicationId=" + event.session.application.applicationId);
-
 		/**
 		 * Uncomment this if statement and populate with your skill's application ID to
 		 * prevent someone else from configuring a skill that sends requests to this function.
@@ -187,16 +186,20 @@ function handleAnswer(intent, session, callback, form){
 		}
 		else{
 			var d = new Date();
-			d = d.toLocaleDateString();
 			var key = d.getMonth()+1;
 			if(key < 10){
 				key = "0" + key;
 			}
 			key = d.getFullYear() + "-" + key + "-";
+			var key_Prev = key;
 			if(d.getDate() < 10){
 				key += "0";
 			}
+			if(d.getDate() - 1 < 10){
+				key_Prev += "0";
+			}
 			key += d.getDate();
+			key_Prev += d.getDate() - 1;
 			var key2 = d.getWeek();
 			if(key2 < 10){
 			    key2 = "0" + key2;
@@ -205,6 +208,9 @@ function handleAnswer(intent, session, callback, form){
 			var results = forms[form.checker](sessions[id].answers);
 			if(!(key in sessions[id].resultsDB)){
 			    sessions[id].resultsDB[key] = {};
+			}
+			if(!(key_Prev in sessions[id].resultsDB)){
+			    sessions[id].resultsDB[key_Prev] = {};
 			}
 			if(!(key2 in sessions[id].resultsDB)){
 			    sessions[id].resultsDB[key2] = {};
@@ -215,6 +221,7 @@ function handleAnswer(intent, session, callback, form){
 				"result": results[0]
 			};
 			sessions[id].resultsDB[key2][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
+			sessions[id].resultsDB[key_Prev][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
 			console.log(sessions[id].resultsDB);
 			speechOutput = form[results[0]];
 			sessions[id].answers = [];
