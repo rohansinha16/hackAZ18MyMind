@@ -1,4 +1,4 @@
-# hackAZ18MyMind
+# My Mind Alexa Skill
 
 This Alexa skill is designed to help monitor and track mental health by giving users the option to take four different clinician approved surveys. These surveys use differently weighted questions to help identify any potential mental health issues. The results are stored 100% anonymously for each user which will allow them to go back and keep track of their mental health history and potentially identify problems. 
 
