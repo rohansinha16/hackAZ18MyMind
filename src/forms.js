@@ -85,27 +85,27 @@ exports.anxiety = {
 	max: 3,
 	intro: "In this Generalized Anxiety Scale, I will be asking you 7 questions on how often" +
 		" you have been bothered by the following problems over the past two weeks or so. Please" +
-		" respond to these questions with a 0, 1, 2, or 3; 0 meaning not at all sure and 3 being" +
+		" respond to these questions with a 0, 1, 2, or 3; 0 meaning not at all, and 3 being" +
 		" nearly every day. Lets begin, ",
 	outro: "Your entry has been logged. This scale was built using the Generalized Anxiety Disorder" +
-		" 7-item (GAD-7) scale.",
-	help: "To answer these questions, please say a number between 0 and 3. 0 indicates not at all sure." +
+		" 7-item (G.A.D-7) scale.",
+	help: "To answer these questions, please say a number between 0 and 3. 0 indicates not at all." +
 		" 1 indicates several days. 2 indicates over half the days. And 3 indicates nearly every day." +
 		" Lets resume...",
 	checker: "diagnosisAnx",
 	MildAnxiety: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
 		" category is Mild Anxiety.",
 	ModAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
-		" GAD; your possible Generalized Anxiety Disorder category is Moderate Anxiety. confirm" +
+		" G.A.D; your possible Generalized Anxiety Disorder category is Moderate Anxiety. confirm" +
 		" by future evaluation.",
-	SeverAnxiety: "Based on the scores you have provided, you qualify for a probable diagnosis of" +
-		" GAD; your possible Generalized Anxiety Disorder category is Sever Anxiety. confirm by" +
+	SevereAnxiety: "Based on the scores you have provided, you qualify for a potential diagnosis of a" +
+		" General Anxiety Disorder; your possible G.A.D category is Severe Anxiety. confirm by" +
 		" future evaluation.",
 	NoSig: "Based on the scores you have provided; your possible Generalized Anxiety Disorder" +
 		" category shows no clinical significance.",
 	questions: [
 		" Feeling nervous, anxious, or on edge.",
-		" Not being able to stop or control worrying.",
+		" Not being able to stop, or control, worrying.",
 		" Worrying too much about different things.",
 		" Trouble relaxing.",
 		" Being so restless that it's hard to sit still.",
@@ -135,7 +135,7 @@ exports.diagnosisAnx = function(questions){
 		return ["ModAnxiety", total];
 	}
 	else{
-		return ["SeverAnxiety", total];
+		return ["SevereAnxiety", total];
 	}
 };
 
@@ -202,7 +202,7 @@ exports.general = {
 	LikelyWell: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to be well.",
 	LikelyMild: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a mild mental disorder.",
 	LikelyMod: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have moderate mental disorder.",
-	LikelySever: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a severe mental disorder.",
+	LikelySevere: "Based on the scores you have provided; your Kessler Psychological Distress Scale result is likely to have a severe mental disorder.",
 	questions: [
 		" During the last 30 days, about how often did you feel tired for no good reason?",
 		" During the last 30 days, about how often did you feel nervous?",
@@ -233,7 +233,7 @@ exports.diagnosisGen = function(questions){
 		return ["LikelyMod", total];
 	}
 	else{
-		return ["LikelySever", total];
+		return ["LikelySevere", total];
 	}
 
 };

@@ -1,58 +1,48 @@
 var forms = require('./forms.js');
+var Alexa = require('alexa-sdk');
+let AWS = require('aws-sdk');
 
-const sessions = {};
+var sessions = {};
 
-const getSession = (alexaid) => {
-	if(!(alexaid in sessions)){
-		sessions[alexaid] = {
-			state: 0,
-			question: 0,
-			scale: 0,
-			answers: [],
-			resultsDB: {}
-		};
+const handlers = {
+	'LaunchRequest' : function() {
+		getSession(this);
+		onLaunch(this.event.request,
+			this.event.session,
+			function callback(sessionAttributes, speechletResponse) {
+				this.context.succeed(buildResponse(sessionAttributes, speechletResponse));
+		});
+	},
+	'IntentRequest' : function() {
+		onIntent(this.event.request,
+			this.event.session,
+			function callback(sessionAttributes, speechletResponse) {
+				this.context.succeed(buildResponse(sessionAttributes, speechletResponse));
+			}, this);
+	},
+	'SessionEndedRequest' : function() {
+		onSessionEnded(this.event.request, this.event.session);
+		this.context.succeed();
+	},
+	'Unhandled' : function() {
+		onIntent(this.event.request,
+			this.event.session,
+			function callback(sessionAttributes, speechletResponse) {
+				this.context.succeed(buildResponse(sessionAttributes, speechletResponse));
+			}, this);
 	}
-	return alexaid;
-};
 
+}
 
-// Route the incoming request based on type (LaunchRequest, IntentRequest,
-// etc.) The JSON body of the request is provided in the event parameter.
-exports.handler = function (event, context) {
-	try {
-		console.log("RECIEVED EVENT: event.session.application.applicationId=" + event.session.application.applicationId);
-		/**
-		 * Uncomment this if statement and populate with your skill's application ID to
-		 * prevent someone else from configuring a skill that sends requests to this function.
-		 */
+exports.handler = function(event, context, callback) {
+	var alexa = Alexa.handler(event, context);
+	alexa.dynamoDBTableName = '<TABLE-NAME-HERE>';
+	alexa.appId = '<APP-ID-HERE>';
+	alexa.registerHandlers(handlers)
+	this.context = context;
+	alexa.execute();
+}
 
-		// if (event.session.application.applicationId !== "") {
-		//     context.fail("Invalid Application ID");
-		//  }
-		if (event.session.new) {
-			onSessionStarted({requestId: event.request.requestId}, event.session);
-		}
-
-		if (event.request.type === "LaunchRequest") {
-			onLaunch(event.request,
-				event.session,
-				function callback(sessionAttributes, speechletResponse) {
-					context.succeed(buildResponse(sessionAttributes, speechletResponse));
-				});
-		} else if (event.request.type === "IntentRequest") {
-			onIntent(event.request,
-				event.session,
-				function callback(sessionAttributes, speechletResponse) {
-					context.succeed(buildResponse(sessionAttributes, speechletResponse));
-				});
-		} else if (event.request.type === "SessionEndedRequest") {
-			onSessionEnded(event.request, event.session);
-			context.succeed();
-		}
-	} catch (e) {
-		context.fail("Exception: " + e);
-	}
-};
 
 /**
  * Called when the session starts.
@@ -72,26 +62,25 @@ function onLaunch(launchRequest, session, callback) {
 /**
  * Called when the user specifies an intent for this skill.
  */
-function onIntent(intentRequest, session, callback) {
+function onIntent(intentRequest, session, callback, alexa) {
 	var intent = intentRequest.intent;
 	var intentName = intentRequest.intent.name;
-	var id = getSession(session.sessionId);
-	var state = sessions[id].state;
-	console.log(sessions[id].state);
+	var state = sessions.state;
+	//console.log(sessions.state);
 	// dispatch custom intents to handlers here
 	if(intentName == "AMAZON.HelpIntent"){
 		handleHelpRequest(intent, session, callback);
 	}
 	else if(intentName == "AMAZON.StopIntent" || intentName == "AMAZON.CancelIntent"){
-		handleStop(intent, session, callback);
+		handleStop(intent, session, callback, alexa);
 	}
 	else if(state == 0){
 		if(intentName == "newEntryIntent"){
-			sessions[id].state = 1;
+			sessions.state = 1;
 			handleEntry(intent, session, callback);
 		}
 		else if(intentName == "checkScoreIntent"){
-			sessions[id].state = 3;
+			sessions.state = 3;
 			var speechOutput = "When do you want to see your entries from?";
 			callback(session.attributes, buildSpeechletResponse("My Mind", speechOutput, "", false));
 		}
@@ -101,27 +90,28 @@ function onIntent(intentRequest, session, callback) {
 	}
 	else if(state == 1){
 		if (intentName == "depressionIntent"){
-			sessions[id].scale = "depression";
+			sessions.scale = "depression";
 		}
 		else if (intentName == "anxietyIntent"){
-			sessions[id].scale = "anxiety";
+			sessions.scale = "anxiety";
 		}
 		else if (intentName == "stressIntent"){
-			sessions[id].scale = "stress";
+			sessions.scale = "stress";
 		}
 		else if (intentName == "generalIntent"){
-			sessions[id].scale = "general";
+			sessions.scale = "general";
 		}
 		else{
 			handleErrorIntent(intent,session,callback);
 		}
-		if(sessions[id].scale != ""){
-			handleIntro(intent, session, callback, forms[sessions[id].scale]);
+		if(sessions.scale != ""){
+			handleIntro(intent, session, callback, forms[sessions.scale]);
 		}
 	}
 	else if(state == 2){
 		if(intentName == "answerIntent"){
-			handleAnswer(intent, session, callback, forms[sessions[id].scale]);
+			//console.log(session.user.userId)
+			handleAnswer(intent, session, callback, forms[sessions.scale], alexa);
 		}
 		else{
 			handleErrorIntent(intent,session,callback);
@@ -145,7 +135,7 @@ function onIntent(intentRequest, session, callback) {
  * Is not called when the skill returns shouldEndSession=true.
  */
 function onSessionEnded(sessionEndedRequest, session) {
-
+	sessions = {};
 }
 
 // ------- Skill specific logic -------
@@ -161,27 +151,25 @@ function getWelcomeResponse(callback) {
 }
 
 function handleIntro(intent, session, callback, form){
-	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = false;
 	var speechOutput = form.intro + " " + form.questions[0];
 	var reprompt = form.questions[0];
-	sessions[id].state = 2;
+	sessions.state = 2;
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
-function handleAnswer(intent, session, callback, form){
-	var id = getSession(session.sessionId);
+function handleAnswer(intent, session, callback, form, alexa){
 	var header = "My Mind";
 	var endSession = false;
 	var speechOutput = "";
 	var reprompt = "";
 	var ans = parseInt(intent.slots.surveyAnswer.value);
 	if(ans >= form.min && ans <= form.max){
-		sessions[id].answers.push(ans);
-		sessions[id].question++;
-		if(sessions[id].question < form.questions.length){
-			speechOutput = form.questions[sessions[id].question];
+		sessions.answers.push(ans);
+		sessions.question++;
+		if(sessions.question < form.questions.length){
+			speechOutput = form.questions[sessions.question];
 			reprompt = speechOutput;
 		}
 		else{
@@ -205,67 +193,65 @@ function handleAnswer(intent, session, callback, form){
 			    key2 = "0" + key2;
 			}
 			var key2 = d.getFullYear() + "-W" + key2;
-			var results = forms[form.checker](sessions[id].answers);
-			if(!(key in sessions[id].resultsDB)){
-			    sessions[id].resultsDB[key] = {};
+			var results = forms[form.checker](sessions.answers);
+			if(!(key in sessions.resultsDB)){
+			    sessions.resultsDB[key] = {};
 			}
-			if(!(key_Prev in sessions[id].resultsDB)){
-			    sessions[id].resultsDB[key_Prev] = {};
+			if(!(key_Prev in sessions.resultsDB)){
+			    sessions.resultsDB[key_Prev] = {};
 			}
-			if(!(key2 in sessions[id].resultsDB)){
-			    sessions[id].resultsDB[key2] = {};
+			if(!(key2 in sessions.resultsDB)){
+			    sessions.resultsDB[key2] = {};
 			}
-			sessions[id].resultsDB[key][sessions[id].scale] = {
-				"answers": sessions[id].answers,
+			sessions.resultsDB[key][sessions.scale] = {
+				"answers": sessions.answers,
 				"total": results[1],
 				"result": form[results[0]]
 			};
-			sessions[id].resultsDB[key2][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
-			sessions[id].resultsDB[key_Prev][sessions[id].scale] = sessions[id].resultsDB[key][sessions[id].scale];
-			console.log(sessions[id].resultsDB);
+			sessions.resultsDB[key2][sessions.scale] = sessions.resultsDB[key][sessions.scale];
+			sessions.resultsDB[key_Prev][sessions.scale] = sessions.resultsDB[key][sessions.scale];
 			speechOutput = form[results[0]] + " If you would like to do another survey, please say 'new entry'. If you would"+
-				" like to check your scores, please say, 'check my scores'. Otherwise, say 'quit' to exit the skill.";
-			sessions[id].answers = [];
-			sessions[id].scale = "";
-			sessions[id].state = 0;
-			sessions[id].question = 0;
+				" like to check your scores, please say, 'check my scores'. Otherwise, say 'stop' to exit the skill.";
+			sessions.answers = [];
+			sessions.scale = "";
+			sessions.state = 0;
+			sessions.question = 0;
 			reprompt = "";
+			saveSession(alexa);
 		}
 	}
 	else{
 		speechOutput = "Please choose a number between " + form.min + " and " + form.max + ".";
-		reprompt = form.questions[sessions[id].question];
+		reprompt = form.questions[sessions.question];
 	}
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleHelpRequest(intent, session, callback) {
-	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = false;
 	var speechOutput = "";
 	var reprompt = "";
-	if(sessions[id].state == 0){
+	if(sessions.state == 0){
 		speechOutput = "To create a new entry and help track your mental health go ahead and say, 'new entry'. Or if you would like "+
-			"to quit, go ahead and say 'quit'.";
+			"to quit, go ahead and say 'stop'.";
 		reprompt = speechOutput;
 	}
-	else if(sessions[id].state == 1){
+	else if(sessions.state == 1){
 		speechOutput = "To select which mental health entry you would like to make go ahead and say one of the following, "+
 			"depression, anxiety, stress, or general. You will then be given a set of statements to rate and your results will be returned based off "+
 			"of a clinically used scale.";
 		reprompt = speechOutput;
 	}
-	else if(sessions[id].state == 2){
-		var form = forms[sessions[id].scale];
-		speechOutput = form.help + " " + form.questions[sessions[id].question];
+	else if(sessions.state == 2){
+		var form = forms[sessions.scale];
+		speechOutput = form.help + " " + form.questions[sessions.question];
 		reprompt = speechOutput;
 	} 
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleDate(intent, session, callback){
-	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = false;
 	var speechOutput = "Here are the results from that time: ";
@@ -280,21 +266,21 @@ function handleDate(intent, session, callback){
 	}
 	// if in future subtract year by 1 for week format
 	if(year == d.getFullYear() && key.substr(5, 1) == "W" && parseInt(key.substr(6, 2)) > d.getWeek()){
-		console.log("week");
+		//console.log("week");
 		year--;
 	}
 	// for day month format
 	else if(year == d.getFullYear() && parseInt(key.substr(5, 2)) > (d.getMonth() + 1)){
-		console.log("day");
+		//console.log("day");
 		year--;
 	}
-	console.log(year);
+	//console.log(year);
 	// add corrected year
 	key = year + key.substr(4);
-	console.log(key);
+	//console.log(key);
 	// check if there is entry for date
-	if(key in sessions[id].resultsDB){
-		var data = sessions[id].resultsDB[key];
+	if(key in sessions.resultsDB){
+		var data = sessions.resultsDB[key];
 		var entry;
 		// go through completed forms from the time
 	 for(var i = 0; i < Object.keys(data).length; i++){
@@ -307,24 +293,27 @@ function handleDate(intent, session, callback){
 		speechOutput = "Sorry, I have no records for that time. ";
 	}
 	// set program to begining
-	sessions[id].state = 0;
+	sessions.state = 0;
 	var reprompt = "If you would like to make a new entry please say 'new entry'. If you would like to check you scores please say 'check my scores'.";
 	speechOutput += reprompt;
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
-function handleStop(intent, session, callback){
-	var id = getSession(session.sessionId);
+function handleStop(intent, session, callback, alexa){
 	var header = "My Mind";
 	var endSession = true;
 	var speechOutput = "Have a nice day!";
 	var reprompt = "";
-	sessions[id].state = 0;
+	sessions.state = 0;
+	sessions.answers = [];
+	sessions.question = 0;
+	sessions.scale = 0;
+	saveSession(alexa);
+	sessions = {}
 	callback(session.attributes, buildSpeechletResponse(header, speechOutput, reprompt, endSession));
 }
 
 function handleEntry(intent, session, callback){
-	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = false;
 	var speechOutput = " Which entry would you like to make today? You can do depression, anxiety, stress, or general.";
@@ -333,7 +322,6 @@ function handleEntry(intent, session, callback){
 }
 
 function handleErrorIntent(intent, session, callback){
-	var id = getSession(session.sessionId);
 	var header = "My Mind";
 	var endSession = false;
 	var speechOutput = " I'm sorry, I didn't understand that response. Please try again or say 'help' for instructions.";
@@ -351,6 +339,32 @@ Date.prototype.getWeek = function() {
 	var week1 = new Date(date.getFullYear(), 0, 4);
 	// Adjust to Thursday in week 1 and count number of weeks from date to week1.
 	return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+}
+
+function getSession(alexa){
+	if(typeof alexa.attributes["session"] == 'undefined'){
+		sessions = {
+			state: 0,
+			question: 0,
+			scale: 0,
+			answers: [],
+			resultsDB: {}
+		};
+		alexa.attributes["session"] = sessions; 
+		console.log("NEW: " + alexa.attributes["session"])
+	} else{
+		console.log("EXISTS: " + alexa.attributes["session"].state)
+		console.log("EXISTS: " + alexa.attributes["session"].answers)
+		console.log("EXISTS: " + alexa.attributes["session"].resultsDB)
+		console.log("EXISTS: " + alexa.attributes["session"].scale)
+		sessions = alexa.attributes["session"];
+	}
+	saveSession(alexa);
+}
+
+function saveSession(alexa){
+	alexa.attributes["session"] = sessions;
+	return alexa.emit(':saveState', true);
 }
 
 // ------- Helper functions to build responses for Alexa -------
